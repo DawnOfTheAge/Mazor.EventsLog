@@ -1,0 +1,242 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{6EC43574-02D9-48CC-B8DB-9627A2497BD8}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>Mazor.EventsLog</RootNamespace>
+    <AssemblyName>Mazor.EventsLog</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Resources\Mazor.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DevExpress.Data.v15.2, Version=15.2.9.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Map.v15.2.Core, Version=15.2.9.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Printing.v15.2.Core, Version=15.2.9.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Utils.v15.2, Version=15.2.9.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraEditors.v15.2, Version=15.2.9.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraMap.v15.2, Version=15.2.9.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraPrinting.v15.2, Version=15.2.9.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="GMap.NET.Core">
+      <HintPath>..\3dParty\GMap.NET.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="GMap.NET.WindowsForms">
+      <HintPath>..\..\GIS\GISSampleApplication01\General.GMAP.GUI\3dParty\GMap.NET.WindowsForms.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Windows.Forms.Ribbon, Version=2.0.0.0, Culture=neutral, PublicKeyToken=928736e248aa81f9, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>3dParty\System.Windows.Forms.Ribbon.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="frmAddUpdateCriminalRecord.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmAddUpdateCriminalRecord.Designer.cs">
+      <DependentUpon>frmAddUpdateCriminalRecord.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmCombinedSearch.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmCombinedSearch.Designer.cs">
+      <DependentUpon>frmCombinedSearch.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmMain.Designer.cs">
+      <DependentUpon>frmMain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmMap.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmMap.Designer.cs">
+      <DependentUpon>frmMap.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmSearchByAddress.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmSearchByAddress.Designer.cs">
+      <DependentUpon>frmSearchByAddress.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmSearchByEvent.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmSearchByEvent.Designer.cs">
+      <DependentUpon>frmSearchByEvent.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmSearchByFamily.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmSearchByFamily.Designer.cs">
+      <DependentUpon>frmSearchByFamily.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmSearchByTime.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmSearchByTime.Designer.cs">
+      <DependentUpon>frmSearchByTime.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmSettings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmSettings.Designer.cs">
+      <DependentUpon>frmSettings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="frmAddUpdateCriminalRecord.resx">
+      <DependentUpon>frmAddUpdateCriminalRecord.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmCombinedSearch.resx">
+      <DependentUpon>frmCombinedSearch.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmMain.resx">
+      <DependentUpon>frmMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmMap.resx">
+      <DependentUpon>frmMap.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmSearchByAddress.resx">
+      <DependentUpon>frmSearchByAddress.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmSearchByEvent.resx">
+      <DependentUpon>frmSearchByEvent.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmSearchByFamily.resx">
+      <DependentUpon>frmSearchByFamily.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmSearchByTime.resx">
+      <DependentUpon>frmSearchByTime.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmSettings.resx">
+      <DependentUpon>frmSettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\licenses.licx" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="Mazor.EventsLog.lic">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\AddEvent.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\DeleteEvent.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ModifyEvent.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Mazor.EventsLog.Bll\Mazor.EventsLog.Bll.csproj">
+      <Project>{aba00e94-f563-4f57-bf0d-75b6a353bb0d}</Project>
+      <Name>Mazor.EventsLog.Bll</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Mazor.EventsLog.Common\Mazor.EventsLog.Common.csproj">
+      <Project>{fec89b3a-941f-45ed-80ab-5e0ba12feba4}</Project>
+      <Name>Mazor.EventsLog.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Mazor.EventsLog.GIS.Bing\Mazor.EventsLog.GIS.Bing.csproj">
+      <Project>{af0b2f96-59b9-42a3-9cfa-ea1e60f032a9}</Project>
+      <Name>Mazor.EventsLog.GIS.Bing</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Exit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Settings.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Address.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\DateTime.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Family.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\All.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\EventType.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Combined.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Mazor.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Version.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Map.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\PushPin.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
