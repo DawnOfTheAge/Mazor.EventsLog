@@ -9,6 +9,240 @@ using System.Threading.Tasks;
 
 namespace Mazor.EventsLog.Common
 {
+    public class LawEnforcementUnit
+    {
+        public LawEnforcementUnit(string name)
+        {
+            Name = name;
+            Id = Guid.NewGuid();
+        }
+
+        public Guid Id { get; set; }
+        public string Name { get; set; }
+    }
+
+    public class LawEnforcementUnits
+    {
+        public LawEnforcementUnits()
+        {
+            LawEnforcementUnitsList = new List<LawEnforcementUnit>();
+        }
+
+        public List<LawEnforcementUnit> LawEnforcementUnitsList { get; set; }
+
+        public bool AddLawEnforcementUnit(string lawEnforcementUnitName, out string result)
+        {
+            result = string.Empty;
+
+            try
+            {
+                if (LawEnforcementUnitsList == null)
+                {
+                    result = "רשימת גורמי אכיפה לא קיימת";
+
+                    return false;
+                }
+
+                if (LawEnforcementUnitExists(lawEnforcementUnitName))
+                {
+                    result = $"שם גורם אכיפה קיים: {lawEnforcementUnitName}";
+
+                    return false;
+                }
+
+                LawEnforcementUnitsList.Add(new LawEnforcementUnit(lawEnforcementUnitName));
+
+                return true;
+            }
+            catch (Exception e)
+            {
+                result = e.Message;
+
+                return false;
+            }
+        }
+
+        private bool LawEnforcementUnitExists(string lawEnforcementUnitName)
+        {
+            try
+            {
+                if ((LawEnforcementUnitsList == null) || (LawEnforcementUnitsList.Count == 0))
+                {
+                    return false;
+                }
+
+                LawEnforcementUnit lawEnforcementUnitExists = LawEnforcementUnitsList.Where(lawEnforcementUnit => lawEnforcementUnit.Name.Trim() == lawEnforcementUnitName.Trim()).First();
+
+                return (lawEnforcementUnitExists != null);
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        public bool DeleteLawEnforcementUnit(Guid lawEnforcementUnitId, out string result)
+        {
+            result = string.Empty;
+
+            try
+            {
+                if ((LawEnforcementUnitsList == null) || (LawEnforcementUnitsList.Count == 0))
+                {
+                    result = "רשימת גורמי אכיפה ריקה";
+
+                    return false;
+                }
+
+                LawEnforcementUnitsList.Remove(LawEnforcementUnitsList.Where(lawEnforcementUnit => lawEnforcementUnit.Id == lawEnforcementUnitId).First());
+
+                return true;
+            }
+            catch (Exception e)
+            {
+                result = e.Message;
+
+                return false;
+            }
+        }
+
+        public List<LawEnforcementUnit> GetLawEnforcementUnits()
+        {
+            return LawEnforcementUnitsList;
+        }
+    }
+
+    public class SpecialLocation
+    {
+        public SpecialLocation(string name, double longtitude, double latitude)
+        {
+            Name = name;
+            Longtitude = longtitude;
+            Latitude = latitude;
+            Id = Guid.NewGuid();
+        }
+
+        public Guid Id { get; set; }
+        public string Name { get; set; }
+        public double Longtitude { get; set; }
+        public double Latitude { get; set; }
+    }
+
+    public class SpecialLocations
+    {
+        public SpecialLocations()
+        {
+            SpecialLocationsList = new List<SpecialLocation>();
+        }
+
+        public List<SpecialLocation> SpecialLocationsList { get; set; }
+
+        public bool AddSpecialLocation(string specialLocationName, double longtitude, double latitudeout, string result)
+        {
+            result = string.Empty;
+
+            try
+            {
+                if (SpecialLocationsList == null)
+                {
+                    result = "רשימת מיקומים קבועים לא קיימת";
+
+                    return false;
+                }
+
+                if (SpecialLocationExists(specialLocationName))
+                {
+                    result = $"שם מיקום קבוע קיים: {specialLocationName}";
+
+                    return false;
+                }
+
+                SpecialLocationsList.Add(new SpecialLocation(specialLocationName, longtitude, latitudeout));
+
+                return true;
+            }
+            catch (Exception e)
+            {
+                result = e.Message;
+
+                return false;
+            }
+        }
+
+        private bool SpecialLocationExists(string specialLocationName)
+        {
+            try
+            {
+                if ((SpecialLocationsList == null) || (SpecialLocationsList.Count == 0))
+                {
+                    return false;
+                }
+
+                SpecialLocation specialLocationExists = SpecialLocationsList.Where(specialLocation => specialLocation.Name.Trim() == specialLocationName.Trim()).First();
+
+                return (specialLocationExists != null);
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        public bool DeleteSpecialLocation(Guid specialLocationId, out string result)
+        {
+            result = string.Empty;
+
+            try
+            {
+                if ((SpecialLocationsList == null) || (SpecialLocationsList.Count == 0))
+                {
+                    result = "רשימת הרחובות ריקה";
+
+                    return false;
+                }
+
+                SpecialLocationsList.Remove(SpecialLocationsList.Where(specialLocation => specialLocation.Id == specialLocationId).First());
+
+                return true;
+            }
+            catch (Exception e)
+            {
+                result = e.Message;
+
+                return false;
+            }
+        }
+
+        public bool GetLocations(Guid specialLocationId, out double longtitude, out double latitude, out string result)
+        {
+            result = string.Empty;
+
+            longtitude = 0;
+            latitude = 0;
+
+            try
+            {
+                SpecialLocation specialLocationExists = SpecialLocationsList.Where(specialLocation => specialLocation.Id == specialLocationId).First();
+
+                longtitude = specialLocationExists.Longtitude;
+                latitude = specialLocationExists.Latitude;
+
+                return true;
+            }
+            catch (Exception e)
+            {
+                result = e.Message;
+
+                return false;
+            }
+        }
+
+        public List<SpecialLocation> GetSpecialLocations()
+        {
+            return SpecialLocationsList;
+        }
+    }
+
     public class Street
     {
         public Street(string name)
