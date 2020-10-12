@@ -75,6 +75,17 @@ namespace Mazor.EventsLog
 
             try
             {
+                #region Prologue
+
+                if (!Prologue(out result))
+                {
+                    Audit($"Prologue Error: {result}", AuditSeverity.Critical);
+
+                    return false;
+                }
+
+                #endregion
+
                 #region Licsence
 
                 LicsenceFilePath = $"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}\\Mazor.EventsLog.lic";
@@ -168,6 +179,60 @@ namespace Mazor.EventsLog
 
                 #endregion
 
+                #region Epilogue
+
+                if (!Epilogue(out result))
+                {
+                    Audit($"Epilogue Error: {result}", AuditSeverity.Critical);
+
+                    return false;
+                }
+
+                #endregion
+
+                return true;
+            }
+            catch (Exception e)
+            {
+                result = e.Message;
+
+                return false;
+            }
+        }
+
+        private bool Prologue(out string result)
+        {
+            result = string.Empty;
+
+            try
+            {
+                Streets streets = new Streets();
+                streets.AddStreet("יוסף", out result);
+                streets.AddStreet("דוד", out result);
+                streets.AddStreet("משה", out result);
+                streets.AddStreet("יוסף", out result);
+
+                List<Street> allStreets = streets.GetStreets();
+
+                streets.DeleteStreet(allStreets[2].Id, out result);
+                allStreets = streets.GetStreets();
+
+                return true;
+            }
+            catch (Exception e)
+            {
+                result = e.Message;
+                
+                return false;
+            }
+        }
+
+        private bool Epilogue(out string result)
+        {
+            result = string.Empty;
+
+            try
+            {
                 return true;
             }
             catch (Exception e)

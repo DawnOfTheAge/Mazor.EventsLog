@@ -9,6 +9,212 @@ using System.Threading.Tasks;
 
 namespace Mazor.EventsLog.Common
 {
+    public class Street
+    {
+        public Street(string name)
+        {
+            Name = name;
+            Id = Guid.NewGuid();
+        }
+
+        public Guid Id { get; set; }
+        public string Name { get; set; }
+    }
+
+    public class Streets
+    {
+        public Streets()
+        {
+            StreetsList = new List<Street>();
+        }
+
+        public List<Street> StreetsList { get; set; }
+
+        public bool AddStreet(string streetName, out string result)
+        {
+            result = string.Empty;
+
+            try
+            {
+                if (StreetsList == null)
+                {
+                    result = "רשימת הרחובות לא קיימת";
+
+                    return false;
+                }
+
+                if (StreetExists(streetName))
+                {
+                    result = $"שם רחוב קיים: {streetName}";
+
+                    return false;
+                }
+
+                StreetsList.Add(new Street(streetName));
+
+                return true;
+            }
+            catch (Exception e)
+            {
+                result = e.Message;
+
+                return false;
+            }
+        }
+
+        private bool StreetExists(string streetName)
+        {
+            try
+            {
+                if ((StreetsList == null) || (StreetsList.Count == 0))
+                {
+                    return false;
+                }
+
+                Street streetExists = StreetsList.Where(street => street.Name.Trim() == streetName.Trim()).First();
+
+                return (streetExists != null);
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        public bool DeleteStreet(Guid streetId, out string result)
+        {
+            result = string.Empty;
+
+            try
+            {
+                if ((StreetsList == null) || (StreetsList.Count == 0))
+                {
+                    result = "רשימת הרחובות ריקה";
+
+                    return false;
+                }
+
+                StreetsList.Remove(StreetsList.Where(street => street.Id == streetId).First());
+
+                return true;
+            }
+            catch (Exception e)
+            {
+                result = e.Message;
+
+                return false;
+            }
+        }
+
+        public List<Street> GetStreets()
+        {
+            return StreetsList;
+        }
+    }
+
+    public class CriminalEventType1
+    {
+        public CriminalEventType1(string name)
+        {
+            Name = name;
+            Id = Guid.NewGuid();
+        }
+
+        public Guid Id { get; set; }
+        public string Name { get; set; }
+    }
+
+    public class CriminalEventTypes
+    {
+        public CriminalEventTypes()
+        {
+            CriminalEventTypesList = new List<CriminalEventType1>();
+        }
+
+        public List<CriminalEventType1> CriminalEventTypesList { get; set; }
+
+        public bool AddCriminalEventType(string criminalEventTypeName, out string result)
+        {
+            result = string.Empty;
+
+            try
+            {
+                if (CriminalEventTypesList == null)
+                {
+                    result = "רשימת סוגי אירוע לא קיימת";
+
+                    return false;
+                }
+
+                if (CriminalEventTypeExists(criminalEventTypeName))
+                {
+                    result = $"שם אירוע קיים: {criminalEventTypeName}";
+
+                    return false;
+                }
+
+                CriminalEventTypesList.Add(new CriminalEventType1(criminalEventTypeName));
+
+                return true;
+            }
+            catch (Exception e)
+            {
+                result = e.Message;
+
+                return false;
+            }
+        }
+
+        private bool CriminalEventTypeExists(string criminalEventTypeName)
+        {
+            try
+            {
+                if ((CriminalEventTypesList == null) || (CriminalEventTypesList.Count == 0))
+                {
+                    return false;
+                }
+
+                CriminalEventType1 criminalEventTypeExists = CriminalEventTypesList.Where(criminalEventType => criminalEventType.Name.Trim() == criminalEventTypeName.Trim()).First();
+
+                return (criminalEventTypeExists != null);
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        public bool DeleteCriminalEventType(Guid streetId, out string result)
+        {
+            result = string.Empty;
+
+            try
+            {
+                if ((CriminalEventTypesList == null) || (CriminalEventTypesList.Count == 0))
+                {
+                    result = "רשימת סוגי אירוע ריקה";
+
+                    return false;
+                }
+
+                CriminalEventTypesList.Remove(CriminalEventTypesList.Where(criminalEventType => criminalEventType.Id == streetId).First());
+
+                return true;
+            }
+            catch (Exception e)
+            {
+                result = e.Message;
+
+                return false;
+            }
+        }
+
+        public List<CriminalEventType1> GetCriminalEventTypes()
+        {
+            return CriminalEventTypesList;
+        }
+    }
+
     public class CriminalEvent : EventArgs
     {
         public CriminalEvent()
