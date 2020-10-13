@@ -34,6 +34,8 @@ namespace Mazor.EventsLog
 
         private MapInitialInformation mapInitialInformation;
 
+        private ContextMenu mapContextMenu;
+
         #endregion
 
         #region Constructor
@@ -114,9 +116,23 @@ namespace Mazor.EventsLog
         {
             try
             {
-                if (e.Button.IsLeft())
+                if (e.Button.IsRight())
                 {
+                    mapContextMenu = new ContextMenu();
+                    MenuItem menuItem;
+
+                    menuItem = new MenuItem("הוספת מיקום");
+                    mapContextMenu.MenuItems.Add(menuItem);
+
+                    menuItem = new MenuItem("הוספת מצלמה");
+                    mapContextMenu.MenuItems.Add(menuItem);
+
+                    menuItem = new MenuItem("הוספת כח מתאמן");
+                    mapContextMenu.MenuItems.Add(menuItem);
+
                     CoordPoint point = bingMap.ScreenPointToCoordPoint(Cursor.Position);
+
+                    bingMap.ContextMenu = mapContextMenu;
                 }
             }
             catch (Exception ex)
