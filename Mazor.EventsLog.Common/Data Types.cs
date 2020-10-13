@@ -114,7 +114,7 @@ namespace Mazor.EventsLog.Common
 
     public class SpecialLocation
     {
-        public SpecialLocation(string name, double longtitude, double latitude)
+        public SpecialLocation(string name, double latitude, double longtitude)
         {
             Name = name;
             Longtitude = longtitude;
@@ -137,7 +137,7 @@ namespace Mazor.EventsLog.Common
 
         public List<SpecialLocation> SpecialLocationsList { get; set; }
 
-        public bool AddSpecialLocation(string specialLocationName, double longtitude, double latitudeout, string result)
+        public bool AddSpecialLocation(string specialLocationName, double latitudeout, double longtitude, string result)
         {
             result = string.Empty;
 
@@ -157,7 +157,7 @@ namespace Mazor.EventsLog.Common
                     return false;
                 }
 
-                SpecialLocationsList.Add(new SpecialLocation(specialLocationName, longtitude, latitudeout));
+                SpecialLocationsList.Add(new SpecialLocation(specialLocationName, latitudeout, longtitude));
 
                 return true;
             }
@@ -213,7 +213,7 @@ namespace Mazor.EventsLog.Common
             }
         }
 
-        public bool GetLocations(Guid specialLocationId, out double longtitude, out double latitude, out string result)
+        public bool GetLocations(Guid specialLocationId, out double latitude, out double longtitude ,out string result)
         {
             result = string.Empty;
 
@@ -758,5 +758,26 @@ namespace Mazor.EventsLog.Common
         public string City { get; set; }
         public string LocationServiceUrl { get; set; }
         public string BingKey { get; set; }
+    }
+
+    public class MapInitialInformation
+    {
+        public MapInitialInformation()
+        {
+            Latitude = 0;
+            Longtitude = 0;
+            ZoomLevel = 0;
+        }
+
+        public MapInitialInformation(double latitude, double longtitude, int zoomLevel)
+        {
+            Latitude = latitude;
+            Longtitude = longtitude;
+            ZoomLevel = zoomLevel;
+        }
+
+        public double Latitude { get; set; }
+        public double Longtitude { get; set; }
+        public int ZoomLevel { get; set; }
     }
 }

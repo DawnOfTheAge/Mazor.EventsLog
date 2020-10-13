@@ -25,6 +25,8 @@ namespace Mazor.EventsLog
 
         private LocationServiceInformation locationServiceInformation;
 
+        private MapInitialInformation mapInitialInformation;
+
         private Crud crud;
 
         private TextWriter AuditFile;
@@ -88,46 +90,46 @@ namespace Mazor.EventsLog
 
                 #region Licsence
 
-                LicsenceFilePath = $"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}\\Mazor.EventsLog.lic";
-                if (!File.Exists(LicsenceFilePath))
-                {
-                    Audit($"אין רשיון להפעלה", AuditSeverity.Critical);
-                }
+                //LicsenceFilePath = $"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}\\Mazor.EventsLog.lic";
+                //if (!File.Exists(LicsenceFilePath))
+                //{
+                //    Audit($"אין רשיון להפעלה", AuditSeverity.Critical);
+                //}
 
-                string macAddressFromFile;
-                string macAddressFromHost;
-                if (!ReadFromLicsenceFile(out macAddressFromFile, out result))
-                {
-                    Audit($"תקלת רשיון להפעלה: {result}", AuditSeverity.Critical);
+                //string macAddressFromFile;
+                //string macAddressFromHost;
+                //if (!ReadFromLicsenceFile(out macAddressFromFile, out result))
+                //{
+                //    Audit($"תקלת רשיון להפעלה: {result}", AuditSeverity.Critical);
 
-                    return false;
-                }
+                //    return false;
+                //}
 
-                if (!Utils.GetMacAddress(out macAddressFromHost, out result))
-                {
-                    Audit($"תקלת רשיון להפעלה: {result}", AuditSeverity.Critical);
+                //if (!Utils.GetMacAddress(out macAddressFromHost, out result))
+                //{
+                //    Audit($"תקלת רשיון להפעלה: {result}", AuditSeverity.Critical);
 
-                    return false;
-                }
+                //    return false;
+                //}
 
-                if (macAddressFromFile == Constants.INITIAL_MAC_ADDRESS_VALUE)
-                {
-                    if (!WriteToLicsenceFile(macAddressFromHost, out result))
-                    {
-                        Audit($"תקלת רשיון להפעלה: {result}", AuditSeverity.Critical);
+                //if (macAddressFromFile == Constants.INITIAL_MAC_ADDRESS_VALUE)
+                //{
+                //    if (!WriteToLicsenceFile(macAddressFromHost, out result))
+                //    {
+                //        Audit($"תקלת רשיון להפעלה: {result}", AuditSeverity.Critical);
 
-                        return false;
-                    }
+                //        return false;
+                //    }
 
-                    Environment.Exit(0);
-                }
+                //    Environment.Exit(0);
+                //}
 
-                if (macAddressFromFile != macAddressFromHost)
-                {
-                    Audit($"אין רשיון להפעלה", AuditSeverity.Critical);
+                //if (macAddressFromFile != macAddressFromHost)
+                //{
+                //    Audit($"אין רשיון להפעלה", AuditSeverity.Critical);
 
-                    return false;
-                }
+                //    return false;
+                //}
 
                 #endregion
 
@@ -206,17 +208,6 @@ namespace Mazor.EventsLog
 
             try
             {
-                Streets streets = new Streets();
-                streets.AddStreet("יוסף", out result);
-                streets.AddStreet("דוד", out result);
-                streets.AddStreet("משה", out result);
-                streets.AddStreet("יוסף", out result);
-
-                List<Street> allStreets = streets.GetStreets();
-
-                streets.DeleteStreet(allStreets[2].Id, out result);
-                allStreets = streets.GetStreets();
-
                 return true;
             }
             catch (Exception e)
@@ -285,6 +276,20 @@ namespace Mazor.EventsLog
                 {
                     configurationInformation.JsonFilePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
                 }
+
+                mapInitialInformation = new MapInitialInformation();
+
+                string latitudeString = ConfigurationManager.AppSettings["MapInitialLatitude"];
+                int latitude;
+                mapInitialInformation.Latitude = int.TryParse(latitudeString, out latitude) ? latitude : Constants.DEFAULT_INITIAL_MAP_LATITUDE;
+
+                string longtitudeString = ConfigurationManager.AppSettings["MapInitialLongitude"];
+                int longtitude;
+                mapInitialInformation.Longtitude = int.TryParse(longtitudeString, out longtitude) ? longtitude : Constants.DEFAULT_INITIAL_MAP_LONGITUDE;
+
+                string zoomLevelString = ConfigurationManager.AppSettings["MapInitialZoomLevel"];
+                int zoomLevel;
+                mapInitialInformation.ZoomLevel = int.TryParse(zoomLevelString, out zoomLevel) ? zoomLevel : Constants.DEFAULT_ZOOM_LEVEL;
 
                 locationServiceInformation = new LocationServiceInformation();
                 locationServiceInformation.Country = ConfigurationManager.AppSettings["LocationServiceCountry"];
@@ -753,12 +758,20 @@ namespace Mazor.EventsLog
         {
             try
             {
-                (new frmMap(locationServiceInformation, criminalEventsForMap)).Show();
+                frmMap map = new frmMap(mapInitialInformation, locationServiceInformation, criminalEventsForMap);
+                map.Audit += Map_Audit;
+                map.Save += AddUpdateCriminalRecord_Save;
+                map.Show();
             }
             catch (Exception ex)
             {
                 Audit($"שגיאת הצגת מפה: {ex.Message}", AuditSeverity.Critical);
             }
+        }
+
+        private void Map_Audit(string message, AuditSeverity severity)
+        {
+            Audit(message, severity);
         }
 
         #endregion
@@ -801,13 +814,13 @@ namespace Mazor.EventsLog
                 if (crud == null)
                 {
                     MessageBox.Show("אין גישה לנתונים", "תקלת סגירה", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
-                    return;
                 }
-
-                if (!crud.SaveCriminalEvents(out result))
+                else
                 {
-                    MessageBox.Show(result, "תקלת שמירת נתונים", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    if (!crud.SaveCriminalEvents(out result))
+                    {
+                        MessageBox.Show(result, "תקלת שמירת נתונים", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
 
                 Environment.Exit(0);

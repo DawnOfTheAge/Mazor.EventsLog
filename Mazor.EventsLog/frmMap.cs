@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using DevExpress.Map;
+using DevExpress.Utils;
 using DevExpress.XtraMap;
 using GMap.NET;
 using GMap.NET.MapProviders;
@@ -19,6 +21,7 @@ namespace Mazor.EventsLog
     {
         #region Events
 
+        public event EventHandler Save; 
         public event AuditMessage Audit;
 
         #endregion
@@ -29,14 +32,17 @@ namespace Mazor.EventsLog
 
         private LocationServiceInformation locationServiceInformation;
 
+        private MapInitialInformation mapInitialInformation;
+
         #endregion
 
         #region Constructor
 
-        public frmMap(LocationServiceInformation inLocationServiceInformation, List<CriminalEvent> inCriminalEvents)
+        public frmMap(MapInitialInformation inMapInitialInformation, LocationServiceInformation inLocationServiceInformation, List<CriminalEvent> inCriminalEvents)
         {
             InitializeComponent();
 
+            mapInitialInformation = inMapInitialInformation;
             locationServiceInformation = inLocationServiceInformation;
             criminalEvents = inCriminalEvents;
         }
@@ -86,8 +92,11 @@ namespace Mazor.EventsLog
                 imageTilesLayer.DataProvider = bingMapDataProvider;
                 bingMap.Layers.Add(imageTilesLayer);
 
-                bingMap.ZoomLevel = 16;
-                bingMap.CenterPoint = new GeoPoint(32.05013752290418, 34.925114988891636);
+                bingMap.ZoomLevel = mapInitialInformation.ZoomLevel;
+                bingMap.CenterPoint = new GeoPoint(mapInitialInformation.Latitude, mapInitialInformation.Longtitude);
+
+                bingMap.MapItemDoubleClick += BingMap_MapItemDoubleClick;
+                bingMap.MouseDown += BingMap_MouseDown;
 
                 return true;
             }
@@ -98,7 +107,61 @@ namespace Mazor.EventsLog
                 return false;
             }
         }
-        
+
+        #region Bing Map Events
+
+        private void BingMap_MouseDown(object sender, MouseEventArgs e)
+        {
+            try
+            {
+                if (e.Button.IsLeft())
+                {
+                    CoordPoint point = bingMap.ScreenPointToCoordPoint(Cursor.Position);
+                }
+            }
+            catch (Exception ex)
+            {
+                OnAudit($"שגיאת קליק עכבר למפת בינג: {ex.Message}", AuditSeverity.Warning);
+            }
+        }
+
+        private void BingMap_MapItemDoubleClick(object sender, MapItemClickEventArgs e)
+        {
+            try
+            {
+                if (e.MouseArgs.Button == MouseButtons.Left && e.Item is MapPushpin)
+                {
+                    MapPushpin mapPushpin = (MapPushpin)(e.Item);
+
+                    if (mapPushpin.Information is CriminalEvent)
+                    {
+                        CriminalEvent criminalEvent = (CriminalEvent)(mapPushpin.Information);
+
+                        frmAddUpdateCriminalRecord showCriminalRecord = new frmAddUpdateCriminalRecord(criminalEvent);
+                        showCriminalRecord.Save += ShowCriminalRecord_Save;
+                        showCriminalRecord.Audit += ShowCriminalRecord_Audit;
+                        showCriminalRecord.Show();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                OnAudit($"שגיאת קליק ל גורם במפת בינג: {ex.Message}", AuditSeverity.Warning);
+            }
+        }
+
+        private void ShowCriminalRecord_Audit(string message, AuditSeverity severity)
+        {
+            OnAudit(message, severity);
+        }
+
+        private void ShowCriminalRecord_Save(object sender, EventArgs e)
+        {
+            OnSave(sender, e);
+        }
+
+        #endregion
+
         private bool CriminalEventsToBingMap(out string result)
         {
             double longtitude;
@@ -143,7 +206,10 @@ namespace Mazor.EventsLog
                         continue;
                     }
 
-                    mapPushpin = new MapPushpin() { Location = new GeoPoint(longtitude, latitude), Image = Properties.Resources.PushPin, ToolTipPattern = CriminalEventToolTip(criminalEvent) };
+                    mapPushpin = new MapPushpin() { Location = new GeoPoint(longtitude, latitude), 
+                                                    Image = Properties.Resources.PushPin, 
+                                                    ToolTipPattern = CriminalEventToolTip(criminalEvent),
+                                                    Information = criminalEvent };
                     mapItemStorage.Items.Add(mapPushpin);
                 }
 
@@ -214,6 +280,14 @@ namespace Mazor.EventsLog
             criminalEventDescription += $"תיאור: {criminalEvent.Description}";
 
             return criminalEventDescription;
+        }
+
+        private void OnSave(object sender, EventArgs e)
+        {
+            if (Save != null)
+            {
+                Save(sender, e);
+            }
         }
 
         private void OnAudit(string message, AuditSeverity severity)
