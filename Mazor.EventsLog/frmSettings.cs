@@ -20,7 +20,13 @@ namespace Mazor.EventsLog
 
         #endregion
 
+        #region Data Members
+
         private ConfigurationInformation configurationInformation;
+
+        #endregion
+
+        #region Constructor
 
         public frmSettings(ConfigurationInformation inConfigurationInformation)
         {
@@ -28,6 +34,10 @@ namespace Mazor.EventsLog
 
             configurationInformation = inConfigurationInformation;
         }
+
+        #endregion
+
+        #region Startup
 
         private void frmSettings_Load(object sender, EventArgs e)
         {
@@ -46,6 +56,10 @@ namespace Mazor.EventsLog
                 OnAudit($"שגיאת טעינת הגדרות: {ex.Message}", AuditSeverity.Error);
             }
         }
+
+        #endregion
+
+        #region Files Locations
 
         private void btnSave_Click(object sender, EventArgs e)
         {
@@ -114,6 +128,108 @@ namespace Mazor.EventsLog
                 OnAudit($"שגיאת בחירת תקיית קובץ רשימות: {ex.Message}", AuditSeverity.Error);
             }
         }
+
+        #endregion
+
+        #region Training Units
+
+        private bool FillTrainingUnits(out string result)
+        {
+            result = string.Empty;
+
+            try
+            {
+                return true;
+            }
+            catch (Exception e)
+            {
+                result = e.Message;
+
+                return false;
+            }
+        }
+
+        #endregion
+
+        #region Law Enforcement Units
+
+        private bool FillLawEnforcementUnits(out string result)
+        {
+            result = string.Empty;
+
+            try
+            {
+                return true;
+            }
+            catch (Exception e)
+            {
+                result = e.Message;
+
+                return false;
+            }
+        }
+
+        #endregion
+
+        #region Arrival Directions
+
+        private bool FillArrivalDirections(out string result)
+        {
+            result = string.Empty;
+
+            try
+            {
+                return true;
+            }
+            catch (Exception e)
+            {
+                result = e.Message;
+
+                return false;
+            }
+        }
+
+        #endregion
+
+        #region Streets
+
+        private bool FillStreets(out string result)
+        {
+            result = string.Empty;
+
+            try
+            {
+                return true;
+            }
+            catch (Exception e)
+            {
+                result = e.Message;
+
+                return false;
+            }
+        }
+
+        #endregion
+
+        #region Locations
+
+        private bool Fill(out string result)
+        {
+            result = string.Empty;
+
+            try
+            {
+                return true;
+            }
+            catch (Exception e)
+            {
+                result = e.Message;
+
+                return false;
+            }
+        }
+
+        #endregion
 
         private bool ValidateSettings(out string result)
         {
