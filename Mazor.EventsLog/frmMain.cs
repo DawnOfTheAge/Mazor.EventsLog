@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
 using System.IO;
@@ -797,7 +798,24 @@ namespace Mazor.EventsLog
         {
             try
             {
-                MessageBox.Show(Application.ProductVersion,"גרסה");
+                List<string> dllFiles = Directory.GetFiles(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Mazor*.dll").ToList();
+                List<string> exeFiles = Directory.GetFiles(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Mazor*.exe").ToList();
+                List<string> allFiles = dllFiles;
+                allFiles.AddRange(exeFiles);
+
+                string filesVersions = string.Empty;
+
+                foreach (string filename in allFiles)
+                {
+                    FileVersionInfo fileVersionInfo = FileVersionInfo.GetVersionInfo(allFiles[0]);
+
+                    string fileLine = $"{Path.GetFileName(filename)}: {fileVersionInfo.FileVersion}{Environment.NewLine}";
+
+                    filesVersions += fileLine;
+                }
+                
+
+                MessageBox.Show(filesVersions, $"גרסה: {Application.ProductVersion}");
             }
             catch (Exception ex)
             {
