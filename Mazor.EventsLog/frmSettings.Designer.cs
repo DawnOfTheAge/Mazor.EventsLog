@@ -72,6 +72,13 @@
             this.colTrainingUnitContact = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colTrainingUnitPhone = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colTrainingUnitEmail = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tabCriminalEvents = new System.Windows.Forms.TabPage();
+            this.tabCameras = new System.Windows.Forms.TabPage();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.btnAddCamera = new System.Windows.Forms.Button();
+            this.colCamera = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colCameraLatitude = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colCameraLongtitude = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabSettings.SuspendLayout();
             this.tabFilesLocations.SuspendLayout();
             this.tabStreets.SuspendLayout();
@@ -84,6 +91,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvArrivalDirections)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvLawEnforcementUnits)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTrainingUnits)).BeginInit();
+            this.tabCameras.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // tabSettings
@@ -94,6 +103,8 @@
             this.tabSettings.Controls.Add(this.tabArrivalDirections);
             this.tabSettings.Controls.Add(this.tabLawEnforcementUnits);
             this.tabSettings.Controls.Add(this.tabTrainingUnits);
+            this.tabSettings.Controls.Add(this.tabCriminalEvents);
+            this.tabSettings.Controls.Add(this.tabCameras);
             this.tabSettings.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabSettings.Location = new System.Drawing.Point(0, 0);
             this.tabSettings.Name = "tabSettings";
@@ -463,6 +474,64 @@
             this.colTrainingUnitEmail.HeaderText = "דואל";
             this.colTrainingUnitEmail.Name = "colTrainingUnitEmail";
             // 
+            // tabCriminalEvents
+            // 
+            this.tabCriminalEvents.Location = new System.Drawing.Point(4, 22);
+            this.tabCriminalEvents.Name = "tabCriminalEvents";
+            this.tabCriminalEvents.Padding = new System.Windows.Forms.Padding(3);
+            this.tabCriminalEvents.Size = new System.Drawing.Size(1034, 434);
+            this.tabCriminalEvents.TabIndex = 6;
+            this.tabCriminalEvents.Text = "אירועים";
+            this.tabCriminalEvents.UseVisualStyleBackColor = true;
+            // 
+            // tabCameras
+            // 
+            this.tabCameras.Controls.Add(this.dataGridView1);
+            this.tabCameras.Controls.Add(this.btnAddCamera);
+            this.tabCameras.Location = new System.Drawing.Point(4, 22);
+            this.tabCameras.Name = "tabCameras";
+            this.tabCameras.Padding = new System.Windows.Forms.Padding(3);
+            this.tabCameras.Size = new System.Drawing.Size(1034, 434);
+            this.tabCameras.TabIndex = 7;
+            this.tabCameras.Text = "מצלמות";
+            this.tabCameras.UseVisualStyleBackColor = true;
+            // 
+            // dataGridView1
+            // 
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.colCamera,
+            this.colCameraLatitude,
+            this.colCameraLongtitude});
+            this.dataGridView1.Location = new System.Drawing.Point(598, 8);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.Size = new System.Drawing.Size(428, 420);
+            this.dataGridView1.TabIndex = 6;
+            // 
+            // btnAddCamera
+            // 
+            this.btnAddCamera.Location = new System.Drawing.Point(498, 8);
+            this.btnAddCamera.Name = "btnAddCamera";
+            this.btnAddCamera.Size = new System.Drawing.Size(94, 36);
+            this.btnAddCamera.TabIndex = 5;
+            this.btnAddCamera.Text = "הוספת מצלמה";
+            this.btnAddCamera.UseVisualStyleBackColor = true;
+            // 
+            // colCamera
+            // 
+            this.colCamera.HeaderText = "מצלמה";
+            this.colCamera.Name = "colCamera";
+            // 
+            // colCameraLatitude
+            // 
+            this.colCameraLatitude.HeaderText = "נקודת רוחב";
+            this.colCameraLatitude.Name = "colCameraLatitude";
+            // 
+            // colCameraLongtitude
+            // 
+            this.colCameraLongtitude.HeaderText = "נקודת אורך";
+            this.colCameraLongtitude.Name = "colCameraLongtitude";
+            // 
             // frmSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -487,6 +556,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvArrivalDirections)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvLawEnforcementUnits)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTrainingUnits)).EndInit();
+            this.tabCameras.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -536,5 +607,12 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colTrainingUnitPhone;
         private System.Windows.Forms.DataGridViewTextBoxColumn colTrainingUnitEmail;
         private System.Windows.Forms.Button btnAddTrainingUnit;
+        private System.Windows.Forms.TabPage tabCriminalEvents;
+        private System.Windows.Forms.TabPage tabCameras;
+        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colCamera;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colCameraLatitude;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colCameraLongtitude;
+        private System.Windows.Forms.Button btnAddCamera;
     }
 }

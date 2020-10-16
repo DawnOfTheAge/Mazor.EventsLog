@@ -211,6 +211,46 @@ namespace Mazor.EventsLog
 
         #endregion
 
+        #region Criminal Events
+
+        private bool FillCriminalEvents(out string result)
+        {
+            result = string.Empty;
+
+            try
+            {
+                return true;
+            }
+            catch (Exception e)
+            {
+                result = e.Message;
+
+                return false;
+            }
+        }
+
+        #endregion
+
+        #region Cameras
+
+        private bool FillCameras(out string result)
+        {
+            result = string.Empty;
+
+            try
+            {
+                return true;
+            }
+            catch (Exception e)
+            {
+                result = e.Message;
+
+                return false;
+            }
+        }
+
+        #endregion
+
         #region Locations
 
         private bool Fill(out string result)
