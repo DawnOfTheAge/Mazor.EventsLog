@@ -9,6 +9,16 @@ using System.Threading.Tasks;
 
 namespace Mazor.EventsLog.Common
 {
+    public class EventsLogDatabase
+    {
+        public List<CriminalEvent> CriminalEventsRecordsList { get; set; }
+        public Street StreetsList { get; set; }
+        public CriminalEventTypes CriminalEventTypesList { get; set; }
+        public SpecialLocations SpecialLocationsList { get; set; }
+        public LawEnforcementUnits LawEnforcementUnitsList { get; set; }
+        public CamerasLocations CameraLocationsList { get; set; }
+    }
+
     public class LawEnforcementUnit
     {
         public LawEnforcementUnit(string name)
@@ -109,6 +119,137 @@ namespace Mazor.EventsLog.Common
         public List<LawEnforcementUnit> GetLawEnforcementUnits()
         {
             return LawEnforcementUnitsList;
+        }
+    }
+
+    public class CameraLocation
+    {
+        public CameraLocation(string name, double latitude, double longtitude)
+        {
+            Name = name;
+            Longtitude = longtitude;
+            Latitude = latitude;
+            Id = Guid.NewGuid();
+        }
+
+        public Guid Id { get; set; }
+        public string Name { get; set; }
+        public double Longtitude { get; set; }
+        public double Latitude { get; set; }
+    }
+
+    public class CamerasLocations
+    {
+        public CamerasLocations()
+        {
+            CamerasLocationsList = new List<CameraLocation>();
+        }
+
+        public List<CameraLocation> CamerasLocationsList { get; set; }
+
+        public bool AddCameraLocation(string cameraLocationName, double latitudeout, double longtitude, string result)
+        {
+            result = string.Empty;
+
+            try
+            {
+                if (CamerasLocationsList == null)
+                {
+                    result = "רשימת מצלמות לא קיימת";
+
+                    return false;
+                }
+
+                if (CameraLocationExists(cameraLocationName))
+                {
+                    result = $"שם מצלמה קיים: {cameraLocationName}";
+
+                    return false;
+                }
+
+                CamerasLocationsList.Add(new CameraLocation(cameraLocationName, latitudeout, longtitude));
+
+                return true;
+            }
+            catch (Exception e)
+            {
+                result = e.Message;
+
+                return false;
+            }
+        }
+
+        private bool CameraLocationExists(string cameraLocationName)
+        {
+            try
+            {
+                if ((CamerasLocationsList == null) || (CamerasLocationsList.Count == 0))
+                {
+                    return false;
+                }
+
+                CameraLocation cameraLocationExists = CamerasLocationsList.Where(cameraLocation => cameraLocation.Name.Trim() == cameraLocationName.Trim()).First();
+
+                return (cameraLocationExists != null);
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        public bool DeleteCameraLocation(Guid cameraLocationId, out string result)
+        {
+            result = string.Empty;
+
+            try
+            {
+                if ((CamerasLocationsList == null) || (CamerasLocationsList.Count == 0))
+                {
+                    result = "רשימת המצלמות ריקה";
+
+                    return false;
+                }
+
+                CamerasLocationsList.Remove(CamerasLocationsList.Where(cameraLocation => cameraLocation.Id == cameraLocationId).First());
+
+                return true;
+            }
+            catch (Exception e)
+            {
+                result = e.Message;
+
+                return false;
+            }
+        }
+
+        public bool GetLocation(Guid cameraLocationId, out double latitude, out double longtitude, out string result)
+        {
+            result = string.Empty;
+
+            longtitude = 0;
+            latitude = 0;
+
+            try
+            {
+                CameraLocation cameraLocationExists = CamerasLocationsList.Where(cameraLocation => cameraLocation.Id == cameraLocationId).First();
+
+                longtitude = cameraLocationExists.Longtitude;
+                latitude = cameraLocationExists.Latitude;
+
+                return true;
+            }
+            catch (Exception e)
+            {
+                result = e.Message;
+
+                return false;
+            }
+        }
+
+        public List<CameraLocation> GetCamerasLocations()
+        {
+            return CamerasLocationsList;
         }
     }
 
@@ -213,7 +354,7 @@ namespace Mazor.EventsLog.Common
             }
         }
 
-        public bool GetLocations(Guid specialLocationId, out double latitude, out double longtitude ,out string result)
+        public bool GetLocation(Guid specialLocationId, out double latitude, out double longtitude ,out string result)
         {
             result = string.Empty;
 
