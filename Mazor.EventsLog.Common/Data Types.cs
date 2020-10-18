@@ -910,20 +910,14 @@ namespace Mazor.EventsLog.Common
     {
         public MapInitialInformation()
         {
-            Latitude = 0;
-            Longtitude = 0;
             ZoomLevel = 0;
         }
 
-        public MapInitialInformation(double latitude, double longtitude, int zoomLevel)
+        public MapInitialInformation(int zoomLevel)
         {
-            Latitude = latitude;
-            Longtitude = longtitude;
             ZoomLevel = zoomLevel;
         }
 
-        public double Latitude { get; set; }
-        public double Longtitude { get; set; }
         public int ZoomLevel { get; set; }
     }
 }

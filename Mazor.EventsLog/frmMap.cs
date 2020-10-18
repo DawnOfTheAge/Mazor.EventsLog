@@ -36,6 +36,8 @@ namespace Mazor.EventsLog
 
         private ContextMenu mapContextMenu;
 
+        private LocationService locationService;
+
         #endregion
 
         #region Constructor
@@ -59,7 +61,7 @@ namespace Mazor.EventsLog
             {
                 Location = Cursor.Position;
 
-                tabMaps.TabPages.Remove(tabGMap);
+                tabMaps.TabPages.Remove(tabGMap);                               
 
                 if (!SetBingMap(out result))
                 {
@@ -83,10 +85,20 @@ namespace Mazor.EventsLog
 
         private bool SetBingMap(out string result)
         {
+            double longtitude;
+            double latitude;
+
             result = string.Empty;
 
             try
             {
+                locationService = new LocationService(locationServiceInformation.LocationServiceUrl,
+                                                      locationServiceInformation.BingKey,
+                                                      locationServiceInformation.Country,
+                                                      locationServiceInformation.City);
+
+                locationService.AddressToLongtitudeLatitude("", out longtitude, out latitude, out result);
+
                 BingMapDataProvider bingMapDataProvider = new BingMapDataProvider();
                 bingMapDataProvider.BingKey = locationServiceInformation.BingKey;
 
@@ -95,10 +107,12 @@ namespace Mazor.EventsLog
                 bingMap.Layers.Add(imageTilesLayer);
 
                 bingMap.ZoomLevel = mapInitialInformation.ZoomLevel;
-                bingMap.CenterPoint = new GeoPoint(mapInitialInformation.Latitude, mapInitialInformation.Longtitude);
+                bingMap.CenterPoint = new GeoPoint(longtitude, latitude);
 
                 bingMap.MapItemDoubleClick += BingMap_MapItemDoubleClick;
                 bingMap.MouseDown += BingMap_MouseDown;
+
+                
 
                 return true;
             }
@@ -193,11 +207,6 @@ namespace Mazor.EventsLog
 
                     return false;
                 }
-
-                LocationService locationService = new LocationService(locationServiceInformation.LocationServiceUrl,
-                                                                      locationServiceInformation.BingKey,
-                                                                      locationServiceInformation.Country,
-                                                                      locationServiceInformation.City);
 
                 VectorItemsLayer vectorItemsLayer = new VectorItemsLayer();
                 MapItemStorage mapItemStorage = new MapItemStorage();

@@ -280,14 +280,6 @@ namespace Mazor.EventsLog
 
                 mapInitialInformation = new MapInitialInformation();
 
-                string latitudeString = ConfigurationManager.AppSettings["MapInitialLatitude"];
-                int latitude;
-                mapInitialInformation.Latitude = int.TryParse(latitudeString, out latitude) ? latitude : Constants.DEFAULT_INITIAL_MAP_LATITUDE;
-
-                string longtitudeString = ConfigurationManager.AppSettings["MapInitialLongitude"];
-                int longtitude;
-                mapInitialInformation.Longtitude = int.TryParse(longtitudeString, out longtitude) ? longtitude : Constants.DEFAULT_INITIAL_MAP_LONGITUDE;
-
                 string zoomLevelString = ConfigurationManager.AppSettings["MapInitialZoomLevel"];
                 int zoomLevel;
                 mapInitialInformation.ZoomLevel = int.TryParse(zoomLevelString, out zoomLevel) ? zoomLevel : Constants.DEFAULT_ZOOM_LEVEL;
