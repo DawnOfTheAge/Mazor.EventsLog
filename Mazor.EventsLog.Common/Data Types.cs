@@ -11,6 +11,11 @@ namespace Mazor.EventsLog.Common
 {
     public class EventsLogDatabase
     {
+        public EventsLogDatabase()
+        {
+            CriminalEventsRecordsList = new List<CriminalEvent>();
+        }
+
         public List<CriminalEvent> CriminalEventsRecordsList { get; set; }
         public Street StreetsList { get; set; }
         public CriminalEventTypes CriminalEventTypesList { get; set; }

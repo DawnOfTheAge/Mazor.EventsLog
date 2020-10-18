@@ -13,6 +13,8 @@ Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Mazor.EventsLog.Setup", "Ma
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mazor.EventsLog.GIS.Bing", "Mazor.EventsLog.GIS.Bing\Mazor.EventsLog.GIS.Bing.csproj", "{AF0B2F96-59B9-42A3-9CFA-EA1E60F032A9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mazor.EventsLog.DatabaseV1toV2Converter", "Mazor.EventsLog.DatabaseV1toV2Converter\Mazor.EventsLog.DatabaseV1toV2Converter.csproj", "{57F341C4-9B3A-42D3-B8DA-801E6AD7D1EA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,6 +39,10 @@ Global
 		{AF0B2F96-59B9-42A3-9CFA-EA1E60F032A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AF0B2F96-59B9-42A3-9CFA-EA1E60F032A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AF0B2F96-59B9-42A3-9CFA-EA1E60F032A9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{57F341C4-9B3A-42D3-B8DA-801E6AD7D1EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{57F341C4-9B3A-42D3-B8DA-801E6AD7D1EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{57F341C4-9B3A-42D3-B8DA-801E6AD7D1EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{57F341C4-9B3A-42D3-B8DA-801E6AD7D1EA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
