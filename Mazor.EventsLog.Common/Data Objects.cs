@@ -21,6 +21,8 @@ namespace Mazor.EventsLog.Common
         public CamerasLocations CameraLocationsList { get; set; }
     }
 
+    #region Training Units
+
     public class TrainingUnitData
     {
         public ContactDetails Details { get; set; }
@@ -133,6 +135,10 @@ namespace Mazor.EventsLog.Common
         }
     }
 
+    #endregion
+
+    #region Law Enforcement Units
+
     public class LawEnforcementUnit
     {
         public LawEnforcementUnit(string name, ContactDetails contactDetails)
@@ -237,6 +243,10 @@ namespace Mazor.EventsLog.Common
             return ItemsList;
         }
     }
+
+    #endregion
+
+    #region Cameras Locations
 
     public class CameraLocation
     {
@@ -365,6 +375,10 @@ namespace Mazor.EventsLog.Common
         }
     }
 
+    #endregion
+
+    #region Special Locations
+
     public class SpecialLocation
     {
         public SpecialLocation(string name, LocationPoint point)
@@ -492,6 +506,10 @@ namespace Mazor.EventsLog.Common
         }
     }
 
+    #endregion
+
+    #region Arrival Directions
+
     public class ArrivalDirection
     {
         public ArrivalDirection(string name)
@@ -594,6 +612,10 @@ namespace Mazor.EventsLog.Common
             return ItemsList;
         }
     }
+
+    #endregion
+
+    #region Streets
 
     public class Street
     {
@@ -698,6 +720,10 @@ namespace Mazor.EventsLog.Common
         }
     }
 
+    #endregion
+
+    #region Criminal Event Types
+
     public class CriminalEventType1
     {
         public CriminalEventType1(string name)
@@ -801,6 +827,10 @@ namespace Mazor.EventsLog.Common
         }
     }
 
+    #endregion
+
+    #region Criminal Events
+
     public class CriminalEvent : EventArgs
     {
         public CriminalEvent()
@@ -844,4 +874,6 @@ namespace Mazor.EventsLog.Common
         public string ArrivalDirection { get; set; }
         public string WhoArrivedAfterTheEvent { get; set; }
     }
+
+    #endregion
 }

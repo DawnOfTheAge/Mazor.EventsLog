@@ -72,9 +72,9 @@ namespace Mazor.EventsLog
                     txtFamily.Text = criminalEvent.Family;
                     cboStreet.Text = criminalEvent.Street;
                     nudHouseNumber.Value = criminalEvent.HouseNumber;
-                    txtArrivalDirection.Text = criminalEvent.ArrivalDirection;
+                    lbArrivalDirection.Text = criminalEvent.ArrivalDirection;
                     txtWhatWasStolen.Text = criminalEvent.WhatWasStolen;
-                    txtWhoArrivedAfterTheEvent.Text = criminalEvent.WhoArrivedAfterTheEvent;
+                    lbWhoArrivedAfterTheEvent.Text = criminalEvent.WhoArrivedAfterTheEvent;
                     txtDescription.Text = criminalEvent.Description;
 
                     dtTime.Value = criminalEvent.Time;
@@ -121,9 +121,9 @@ namespace Mazor.EventsLog
                     newCriminalEvent.Family = txtFamily.Text;
                     newCriminalEvent.Street = cboStreet.Text;
                     newCriminalEvent.HouseNumber = (int)nudHouseNumber.Value;
-                    newCriminalEvent.ArrivalDirection = txtArrivalDirection.Text;
+                    newCriminalEvent.ArrivalDirection = lbArrivalDirection.Text;
                     newCriminalEvent.WhatWasStolen = txtWhatWasStolen.Text;
-                    newCriminalEvent.WhoArrivedAfterTheEvent = txtWhoArrivedAfterTheEvent.Text;
+                    newCriminalEvent.WhoArrivedAfterTheEvent = lbWhoArrivedAfterTheEvent.Text;
                     newCriminalEvent.Description = txtDescription.Text;
 
                     newCriminalEvent.Time = new DateTime(dtDate.Value.Year, dtDate.Value.Month, dtDate.Value.Day, dtTime.Value.Hour, dtTime.Value.Minute, dtTime.Value.Second);

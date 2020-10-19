@@ -35,9 +35,7 @@
             this.lblAddress = new System.Windows.Forms.Label();
             this.lblWhatWasStolen = new System.Windows.Forms.Label();
             this.txtWhatWasStolen = new System.Windows.Forms.TextBox();
-            this.txtArrivalDirection = new System.Windows.Forms.TextBox();
             this.lblArrivalDirection = new System.Windows.Forms.Label();
-            this.txtWhoArrivedAfterTheEvent = new System.Windows.Forms.TextBox();
             this.lblWhoArrivedAfterTheEvent = new System.Windows.Forms.Label();
             this.txtDescription = new System.Windows.Forms.TextBox();
             this.lblDescription = new System.Windows.Forms.Label();
@@ -50,6 +48,8 @@
             this.lblHouseNumber = new System.Windows.Forms.Label();
             this.lblEventType = new System.Windows.Forms.Label();
             this.cboEventType = new System.Windows.Forms.ComboBox();
+            this.lbArrivalDirection = new System.Windows.Forms.ListBox();
+            this.lbWhoArrivedAfterTheEvent = new System.Windows.Forms.ListBox();
             ((System.ComponentModel.ISupportInitialize)(this.nudHouseNumber)).BeginInit();
             this.SuspendLayout();
             // 
@@ -115,15 +115,6 @@
             this.txtWhatWasStolen.Size = new System.Drawing.Size(328, 63);
             this.txtWhatWasStolen.TabIndex = 7;
             // 
-            // txtArrivalDirection
-            // 
-            this.txtArrivalDirection.Location = new System.Drawing.Point(18, 190);
-            this.txtArrivalDirection.Multiline = true;
-            this.txtArrivalDirection.Name = "txtArrivalDirection";
-            this.txtArrivalDirection.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.txtArrivalDirection.Size = new System.Drawing.Size(328, 63);
-            this.txtArrivalDirection.TabIndex = 9;
-            // 
             // lblArrivalDirection
             // 
             this.lblArrivalDirection.AutoSize = true;
@@ -132,15 +123,6 @@
             this.lblArrivalDirection.Size = new System.Drawing.Size(66, 13);
             this.lblArrivalDirection.TabIndex = 8;
             this.lblArrivalDirection.Text = "כוון ההגעה";
-            // 
-            // txtWhoArrivedAfterTheEvent
-            // 
-            this.txtWhoArrivedAfterTheEvent.Location = new System.Drawing.Point(18, 372);
-            this.txtWhoArrivedAfterTheEvent.Multiline = true;
-            this.txtWhoArrivedAfterTheEvent.Name = "txtWhoArrivedAfterTheEvent";
-            this.txtWhoArrivedAfterTheEvent.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.txtWhoArrivedAfterTheEvent.Size = new System.Drawing.Size(328, 63);
-            this.txtWhoArrivedAfterTheEvent.TabIndex = 11;
             // 
             // lblWhoArrivedAfterTheEvent
             // 
@@ -265,11 +247,29 @@
             this.cboEventType.Size = new System.Drawing.Size(160, 21);
             this.cboEventType.TabIndex = 21;
             // 
+            // lbArrivalDirection
+            // 
+            this.lbArrivalDirection.FormattingEnabled = true;
+            this.lbArrivalDirection.Location = new System.Drawing.Point(18, 193);
+            this.lbArrivalDirection.Name = "lbArrivalDirection";
+            this.lbArrivalDirection.Size = new System.Drawing.Size(328, 56);
+            this.lbArrivalDirection.TabIndex = 23;
+            // 
+            // lbWhoArrivedAfterTheEvent
+            // 
+            this.lbWhoArrivedAfterTheEvent.FormattingEnabled = true;
+            this.lbWhoArrivedAfterTheEvent.Location = new System.Drawing.Point(18, 375);
+            this.lbWhoArrivedAfterTheEvent.Name = "lbWhoArrivedAfterTheEvent";
+            this.lbWhoArrivedAfterTheEvent.Size = new System.Drawing.Size(328, 56);
+            this.lbWhoArrivedAfterTheEvent.TabIndex = 24;
+            // 
             // frmAddUpdateCriminalRecord
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(472, 602);
+            this.Controls.Add(this.lbWhoArrivedAfterTheEvent);
+            this.Controls.Add(this.lbArrivalDirection);
             this.Controls.Add(this.lblEventType);
             this.Controls.Add(this.cboEventType);
             this.Controls.Add(this.lblHouseNumber);
@@ -281,9 +281,7 @@
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.txtDescription);
             this.Controls.Add(this.lblDescription);
-            this.Controls.Add(this.txtWhoArrivedAfterTheEvent);
             this.Controls.Add(this.lblWhoArrivedAfterTheEvent);
-            this.Controls.Add(this.txtArrivalDirection);
             this.Controls.Add(this.lblArrivalDirection);
             this.Controls.Add(this.txtWhatWasStolen);
             this.Controls.Add(this.lblWhatWasStolen);
@@ -310,9 +308,7 @@
         private System.Windows.Forms.Label lblAddress;
         private System.Windows.Forms.Label lblWhatWasStolen;
         private System.Windows.Forms.TextBox txtWhatWasStolen;
-        private System.Windows.Forms.TextBox txtArrivalDirection;
         private System.Windows.Forms.Label lblArrivalDirection;
-        private System.Windows.Forms.TextBox txtWhoArrivedAfterTheEvent;
         private System.Windows.Forms.Label lblWhoArrivedAfterTheEvent;
         private System.Windows.Forms.TextBox txtDescription;
         private System.Windows.Forms.Label lblDescription;
@@ -325,5 +321,7 @@
         private System.Windows.Forms.Label lblHouseNumber;
         private System.Windows.Forms.Label lblEventType;
         private System.Windows.Forms.ComboBox cboEventType;
+        private System.Windows.Forms.ListBox lbArrivalDirection;
+        private System.Windows.Forms.ListBox lbWhoArrivedAfterTheEvent;
     }
 }
