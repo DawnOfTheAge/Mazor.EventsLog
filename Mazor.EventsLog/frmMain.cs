@@ -22,6 +22,8 @@ namespace Mazor.EventsLog
     {
         #region Data Members
 
+        private EventsLogDatabase eventsLogDatabase;
+
         private ConfigurationInformation configurationInformation;
 
         private LocationServiceInformation locationServiceInformation;
@@ -775,7 +777,7 @@ namespace Mazor.EventsLog
         {
             try
             {
-                frmSettings settings = new frmSettings(configurationInformation);
+                frmSettings settings = new frmSettings(configurationInformation, eventsLogDatabase);
                 settings.Audit += Search_Audit;
                 settings.Reply += Settings_Reply;
                 settings.Show();

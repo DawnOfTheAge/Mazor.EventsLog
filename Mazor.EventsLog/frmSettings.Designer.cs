@@ -29,6 +29,22 @@
         private void InitializeComponent()
         {
             this.tabSettings = new System.Windows.Forms.TabControl();
+            this.tabGeneral = new System.Windows.Forms.TabPage();
+            this.txtLocationServiceCity = new System.Windows.Forms.TextBox();
+            this.txtLocationServiceCountry = new System.Windows.Forms.TextBox();
+            this.txtLocationServiceUrl = new System.Windows.Forms.TextBox();
+            this.txtLocationServiceBingKey = new System.Windows.Forms.TextBox();
+            this.nudZoomLevel = new System.Windows.Forms.NumericUpDown();
+            this.nudPingTestIntervalInSeconds = new System.Windows.Forms.NumericUpDown();
+            this.txtPingTestAddress = new System.Windows.Forms.TextBox();
+            this.lblLocationServiceCity = new System.Windows.Forms.Label();
+            this.lblLocationServiceCountry = new System.Windows.Forms.Label();
+            this.lblLocationServiceUrl = new System.Windows.Forms.Label();
+            this.lblZoomLevel = new System.Windows.Forms.Label();
+            this.lblPingTestAddress = new System.Windows.Forms.Label();
+            this.lblLocationServiceBingKey = new System.Windows.Forms.Label();
+            this.lblPingTestIntervalInSeconds = new System.Windows.Forms.Label();
+            this.btnSaveGeneral = new System.Windows.Forms.Button();
             this.tabFilesLocations = new System.Windows.Forms.TabPage();
             this.btnSave = new System.Windows.Forms.Button();
             this.txtLogFilePath = new System.Windows.Forms.TextBox();
@@ -79,23 +95,14 @@
             this.colCameraLatitude = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colCameraLongtitude = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnAddCamera = new System.Windows.Forms.Button();
-            this.tabGeneral = new System.Windows.Forms.TabPage();
-            this.btnSaveGeneral = new System.Windows.Forms.Button();
-            this.lblPingTestIntervalInSeconds = new System.Windows.Forms.Label();
-            this.lblLocationServiceBingKey = new System.Windows.Forms.Label();
-            this.lblPingTestAddress = new System.Windows.Forms.Label();
-            this.lblZoomLevel = new System.Windows.Forms.Label();
-            this.lblLocationServiceUrl = new System.Windows.Forms.Label();
-            this.lblLocationServiceCountry = new System.Windows.Forms.Label();
-            this.lblLocationServiceCity = new System.Windows.Forms.Label();
-            this.txtPingTestAddress = new System.Windows.Forms.TextBox();
-            this.nudPingTestIntervalInSeconds = new System.Windows.Forms.NumericUpDown();
-            this.nudZoomLevel = new System.Windows.Forms.NumericUpDown();
-            this.txtLocationServiceBingKey = new System.Windows.Forms.TextBox();
-            this.txtLocationServiceUrl = new System.Windows.Forms.TextBox();
-            this.txtLocationServiceCountry = new System.Windows.Forms.TextBox();
-            this.txtLocationServiceCity = new System.Windows.Forms.TextBox();
+            this.dgvCriminalEventTypes = new System.Windows.Forms.DataGridView();
+            this.btnAddCriminalEventType = new System.Windows.Forms.Button();
+            this.colCriminalEventType = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colCriminalEventId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabSettings.SuspendLayout();
+            this.tabGeneral.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudZoomLevel)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudPingTestIntervalInSeconds)).BeginInit();
             this.tabFilesLocations.SuspendLayout();
             this.tabStreets.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvStreets)).BeginInit();
@@ -107,11 +114,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvLawEnforcementUnits)).BeginInit();
             this.tabTrainingUnits.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTrainingUnits)).BeginInit();
+            this.tabCriminalEvents.SuspendLayout();
             this.tabCameras.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
-            this.tabGeneral.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudPingTestIntervalInSeconds)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudZoomLevel)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvCriminalEventTypes)).BeginInit();
             this.SuspendLayout();
             // 
             // tabSettings
@@ -131,6 +137,152 @@
             this.tabSettings.SelectedIndex = 0;
             this.tabSettings.Size = new System.Drawing.Size(1042, 460);
             this.tabSettings.TabIndex = 11;
+            // 
+            // tabGeneral
+            // 
+            this.tabGeneral.Controls.Add(this.txtLocationServiceCity);
+            this.tabGeneral.Controls.Add(this.txtLocationServiceCountry);
+            this.tabGeneral.Controls.Add(this.txtLocationServiceUrl);
+            this.tabGeneral.Controls.Add(this.txtLocationServiceBingKey);
+            this.tabGeneral.Controls.Add(this.nudZoomLevel);
+            this.tabGeneral.Controls.Add(this.nudPingTestIntervalInSeconds);
+            this.tabGeneral.Controls.Add(this.txtPingTestAddress);
+            this.tabGeneral.Controls.Add(this.lblLocationServiceCity);
+            this.tabGeneral.Controls.Add(this.lblLocationServiceCountry);
+            this.tabGeneral.Controls.Add(this.lblLocationServiceUrl);
+            this.tabGeneral.Controls.Add(this.lblZoomLevel);
+            this.tabGeneral.Controls.Add(this.lblPingTestAddress);
+            this.tabGeneral.Controls.Add(this.lblLocationServiceBingKey);
+            this.tabGeneral.Controls.Add(this.lblPingTestIntervalInSeconds);
+            this.tabGeneral.Controls.Add(this.btnSaveGeneral);
+            this.tabGeneral.Location = new System.Drawing.Point(4, 22);
+            this.tabGeneral.Name = "tabGeneral";
+            this.tabGeneral.Padding = new System.Windows.Forms.Padding(3);
+            this.tabGeneral.Size = new System.Drawing.Size(1034, 434);
+            this.tabGeneral.TabIndex = 8;
+            this.tabGeneral.Text = "כללי";
+            this.tabGeneral.UseVisualStyleBackColor = true;
+            // 
+            // txtLocationServiceCity
+            // 
+            this.txtLocationServiceCity.Location = new System.Drawing.Point(691, 104);
+            this.txtLocationServiceCity.Name = "txtLocationServiceCity";
+            this.txtLocationServiceCity.Size = new System.Drawing.Size(179, 20);
+            this.txtLocationServiceCity.TabIndex = 35;
+            // 
+            // txtLocationServiceCountry
+            // 
+            this.txtLocationServiceCountry.Location = new System.Drawing.Point(770, 70);
+            this.txtLocationServiceCountry.Name = "txtLocationServiceCountry";
+            this.txtLocationServiceCountry.Size = new System.Drawing.Size(100, 20);
+            this.txtLocationServiceCountry.TabIndex = 34;
+            // 
+            // txtLocationServiceUrl
+            // 
+            this.txtLocationServiceUrl.Location = new System.Drawing.Point(510, 36);
+            this.txtLocationServiceUrl.Name = "txtLocationServiceUrl";
+            this.txtLocationServiceUrl.Size = new System.Drawing.Size(360, 20);
+            this.txtLocationServiceUrl.TabIndex = 33;
+            // 
+            // txtLocationServiceBingKey
+            // 
+            this.txtLocationServiceBingKey.Location = new System.Drawing.Point(510, 160);
+            this.txtLocationServiceBingKey.Name = "txtLocationServiceBingKey";
+            this.txtLocationServiceBingKey.Size = new System.Drawing.Size(360, 20);
+            this.txtLocationServiceBingKey.TabIndex = 32;
+            // 
+            // nudZoomLevel
+            // 
+            this.nudZoomLevel.Location = new System.Drawing.Point(814, 235);
+            this.nudZoomLevel.Name = "nudZoomLevel";
+            this.nudZoomLevel.Size = new System.Drawing.Size(56, 20);
+            this.nudZoomLevel.TabIndex = 31;
+            // 
+            // nudPingTestIntervalInSeconds
+            // 
+            this.nudPingTestIntervalInSeconds.Location = new System.Drawing.Point(814, 351);
+            this.nudPingTestIntervalInSeconds.Name = "nudPingTestIntervalInSeconds";
+            this.nudPingTestIntervalInSeconds.Size = new System.Drawing.Size(56, 20);
+            this.nudPingTestIntervalInSeconds.TabIndex = 30;
+            // 
+            // txtPingTestAddress
+            // 
+            this.txtPingTestAddress.Location = new System.Drawing.Point(729, 324);
+            this.txtPingTestAddress.Name = "txtPingTestAddress";
+            this.txtPingTestAddress.Size = new System.Drawing.Size(141, 20);
+            this.txtPingTestAddress.TabIndex = 29;
+            // 
+            // lblLocationServiceCity
+            // 
+            this.lblLocationServiceCity.AutoSize = true;
+            this.lblLocationServiceCity.Location = new System.Drawing.Point(900, 107);
+            this.lblLocationServiceCity.Name = "lblLocationServiceCity";
+            this.lblLocationServiceCity.Size = new System.Drawing.Size(103, 13);
+            this.lblLocationServiceCity.TabIndex = 28;
+            this.lblLocationServiceCity.Text = "שרות מיקום - ישוב";
+            // 
+            // lblLocationServiceCountry
+            // 
+            this.lblLocationServiceCountry.AutoSize = true;
+            this.lblLocationServiceCountry.Location = new System.Drawing.Point(896, 73);
+            this.lblLocationServiceCountry.Name = "lblLocationServiceCountry";
+            this.lblLocationServiceCountry.Size = new System.Drawing.Size(108, 13);
+            this.lblLocationServiceCountry.TabIndex = 27;
+            this.lblLocationServiceCountry.Text = "שרות מיקום - מדינה";
+            // 
+            // lblLocationServiceUrl
+            // 
+            this.lblLocationServiceUrl.AutoSize = true;
+            this.lblLocationServiceUrl.Location = new System.Drawing.Point(876, 39);
+            this.lblLocationServiceUrl.Name = "lblLocationServiceUrl";
+            this.lblLocationServiceUrl.Size = new System.Drawing.Size(128, 13);
+            this.lblLocationServiceUrl.TabIndex = 26;
+            this.lblLocationServiceUrl.Text = "כתובת אתר שרות מיקום";
+            // 
+            // lblZoomLevel
+            // 
+            this.lblZoomLevel.AutoSize = true;
+            this.lblZoomLevel.Location = new System.Drawing.Point(894, 237);
+            this.lblZoomLevel.Name = "lblZoomLevel";
+            this.lblZoomLevel.Size = new System.Drawing.Size(110, 13);
+            this.lblZoomLevel.TabIndex = 25;
+            this.lblZoomLevel.Text = "רמת ZOOM ראשונית";
+            // 
+            // lblPingTestAddress
+            // 
+            this.lblPingTestAddress.AutoSize = true;
+            this.lblPingTestAddress.Location = new System.Drawing.Point(892, 327);
+            this.lblPingTestAddress.Name = "lblPingTestAddress";
+            this.lblPingTestAddress.Size = new System.Drawing.Size(112, 13);
+            this.lblPingTestAddress.TabIndex = 24;
+            this.lblPingTestAddress.Text = "כתובת לבדיקת PING";
+            // 
+            // lblLocationServiceBingKey
+            // 
+            this.lblLocationServiceBingKey.AutoSize = true;
+            this.lblLocationServiceBingKey.Location = new System.Drawing.Point(939, 163);
+            this.lblLocationServiceBingKey.Name = "lblLocationServiceBingKey";
+            this.lblLocationServiceBingKey.Size = new System.Drawing.Size(64, 13);
+            this.lblLocationServiceBingKey.TabIndex = 23;
+            this.lblLocationServiceBingKey.Text = "מפתח BING";
+            // 
+            // lblPingTestIntervalInSeconds
+            // 
+            this.lblPingTestIntervalInSeconds.AutoSize = true;
+            this.lblPingTestIntervalInSeconds.Location = new System.Drawing.Point(876, 353);
+            this.lblPingTestIntervalInSeconds.Name = "lblPingTestIntervalInSeconds";
+            this.lblPingTestIntervalInSeconds.Size = new System.Drawing.Size(128, 13);
+            this.lblPingTestIntervalInSeconds.TabIndex = 22;
+            this.lblPingTestIntervalInSeconds.Text = "שניות בין בדיקות PING";
+            // 
+            // btnSaveGeneral
+            // 
+            this.btnSaveGeneral.Location = new System.Drawing.Point(6, 396);
+            this.btnSaveGeneral.Name = "btnSaveGeneral";
+            this.btnSaveGeneral.Size = new System.Drawing.Size(92, 30);
+            this.btnSaveGeneral.TabIndex = 21;
+            this.btnSaveGeneral.Text = "שמירה";
+            this.btnSaveGeneral.UseVisualStyleBackColor = true;
             // 
             // tabFilesLocations
             // 
@@ -496,6 +648,8 @@
             // 
             // tabCriminalEvents
             // 
+            this.tabCriminalEvents.Controls.Add(this.dgvCriminalEventTypes);
+            this.tabCriminalEvents.Controls.Add(this.btnAddCriminalEventType);
             this.tabCriminalEvents.Location = new System.Drawing.Point(4, 22);
             this.tabCriminalEvents.Name = "tabCriminalEvents";
             this.tabCriminalEvents.Padding = new System.Windows.Forms.Padding(3);
@@ -552,151 +706,38 @@
             this.btnAddCamera.Text = "הוספת מצלמה";
             this.btnAddCamera.UseVisualStyleBackColor = true;
             // 
-            // tabGeneral
+            // dgvCriminalEventTypes
             // 
-            this.tabGeneral.Controls.Add(this.txtLocationServiceCity);
-            this.tabGeneral.Controls.Add(this.txtLocationServiceCountry);
-            this.tabGeneral.Controls.Add(this.txtLocationServiceUrl);
-            this.tabGeneral.Controls.Add(this.txtLocationServiceBingKey);
-            this.tabGeneral.Controls.Add(this.nudZoomLevel);
-            this.tabGeneral.Controls.Add(this.nudPingTestIntervalInSeconds);
-            this.tabGeneral.Controls.Add(this.txtPingTestAddress);
-            this.tabGeneral.Controls.Add(this.lblLocationServiceCity);
-            this.tabGeneral.Controls.Add(this.lblLocationServiceCountry);
-            this.tabGeneral.Controls.Add(this.lblLocationServiceUrl);
-            this.tabGeneral.Controls.Add(this.lblZoomLevel);
-            this.tabGeneral.Controls.Add(this.lblPingTestAddress);
-            this.tabGeneral.Controls.Add(this.lblLocationServiceBingKey);
-            this.tabGeneral.Controls.Add(this.lblPingTestIntervalInSeconds);
-            this.tabGeneral.Controls.Add(this.btnSaveGeneral);
-            this.tabGeneral.Location = new System.Drawing.Point(4, 22);
-            this.tabGeneral.Name = "tabGeneral";
-            this.tabGeneral.Padding = new System.Windows.Forms.Padding(3);
-            this.tabGeneral.Size = new System.Drawing.Size(1034, 434);
-            this.tabGeneral.TabIndex = 8;
-            this.tabGeneral.Text = "כללי";
-            this.tabGeneral.UseVisualStyleBackColor = true;
+            this.dgvCriminalEventTypes.AllowUserToAddRows = false;
+            this.dgvCriminalEventTypes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvCriminalEventTypes.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.colCriminalEventType,
+            this.colCriminalEventId});
+            this.dgvCriminalEventTypes.Location = new System.Drawing.Point(786, 8);
+            this.dgvCriminalEventTypes.Name = "dgvCriminalEventTypes";
+            this.dgvCriminalEventTypes.Size = new System.Drawing.Size(240, 420);
+            this.dgvCriminalEventTypes.TabIndex = 4;
             // 
-            // btnSaveGeneral
+            // btnAddCriminalEventType
             // 
-            this.btnSaveGeneral.Location = new System.Drawing.Point(6, 396);
-            this.btnSaveGeneral.Name = "btnSaveGeneral";
-            this.btnSaveGeneral.Size = new System.Drawing.Size(92, 30);
-            this.btnSaveGeneral.TabIndex = 21;
-            this.btnSaveGeneral.Text = "שמירה";
-            this.btnSaveGeneral.UseVisualStyleBackColor = true;
+            this.btnAddCriminalEventType.Location = new System.Drawing.Point(674, 8);
+            this.btnAddCriminalEventType.Name = "btnAddCriminalEventType";
+            this.btnAddCriminalEventType.Size = new System.Drawing.Size(106, 36);
+            this.btnAddCriminalEventType.TabIndex = 3;
+            this.btnAddCriminalEventType.Text = "הוספת סוג אירוע";
+            this.btnAddCriminalEventType.UseVisualStyleBackColor = true;
+            this.btnAddCriminalEventType.Click += new System.EventHandler(this.btnAddCriminalEventType_Click);
             // 
-            // lblPingTestIntervalInSeconds
+            // colCriminalEventType
             // 
-            this.lblPingTestIntervalInSeconds.AutoSize = true;
-            this.lblPingTestIntervalInSeconds.Location = new System.Drawing.Point(876, 353);
-            this.lblPingTestIntervalInSeconds.Name = "lblPingTestIntervalInSeconds";
-            this.lblPingTestIntervalInSeconds.Size = new System.Drawing.Size(128, 13);
-            this.lblPingTestIntervalInSeconds.TabIndex = 22;
-            this.lblPingTestIntervalInSeconds.Text = "שניות בין בדיקות PING";
+            this.colCriminalEventType.HeaderText = "סוג אירוע";
+            this.colCriminalEventType.Name = "colCriminalEventType";
             // 
-            // lblLocationServiceBingKey
+            // colCriminalEventId
             // 
-            this.lblLocationServiceBingKey.AutoSize = true;
-            this.lblLocationServiceBingKey.Location = new System.Drawing.Point(939, 163);
-            this.lblLocationServiceBingKey.Name = "lblLocationServiceBingKey";
-            this.lblLocationServiceBingKey.Size = new System.Drawing.Size(64, 13);
-            this.lblLocationServiceBingKey.TabIndex = 23;
-            this.lblLocationServiceBingKey.Text = "מפתח BING";
-            // 
-            // lblPingTestAddress
-            // 
-            this.lblPingTestAddress.AutoSize = true;
-            this.lblPingTestAddress.Location = new System.Drawing.Point(892, 327);
-            this.lblPingTestAddress.Name = "lblPingTestAddress";
-            this.lblPingTestAddress.Size = new System.Drawing.Size(112, 13);
-            this.lblPingTestAddress.TabIndex = 24;
-            this.lblPingTestAddress.Text = "כתובת לבדיקת PING";
-            // 
-            // lblZoomLevel
-            // 
-            this.lblZoomLevel.AutoSize = true;
-            this.lblZoomLevel.Location = new System.Drawing.Point(894, 237);
-            this.lblZoomLevel.Name = "lblZoomLevel";
-            this.lblZoomLevel.Size = new System.Drawing.Size(110, 13);
-            this.lblZoomLevel.TabIndex = 25;
-            this.lblZoomLevel.Text = "רמת ZOOM ראשונית";
-            // 
-            // lblLocationServiceUrl
-            // 
-            this.lblLocationServiceUrl.AutoSize = true;
-            this.lblLocationServiceUrl.Location = new System.Drawing.Point(876, 39);
-            this.lblLocationServiceUrl.Name = "lblLocationServiceUrl";
-            this.lblLocationServiceUrl.Size = new System.Drawing.Size(128, 13);
-            this.lblLocationServiceUrl.TabIndex = 26;
-            this.lblLocationServiceUrl.Text = "כתובת אתר שרות מיקום";
-            // 
-            // lblLocationServiceCountry
-            // 
-            this.lblLocationServiceCountry.AutoSize = true;
-            this.lblLocationServiceCountry.Location = new System.Drawing.Point(896, 73);
-            this.lblLocationServiceCountry.Name = "lblLocationServiceCountry";
-            this.lblLocationServiceCountry.Size = new System.Drawing.Size(108, 13);
-            this.lblLocationServiceCountry.TabIndex = 27;
-            this.lblLocationServiceCountry.Text = "שרות מיקום - מדינה";
-            // 
-            // lblLocationServiceCity
-            // 
-            this.lblLocationServiceCity.AutoSize = true;
-            this.lblLocationServiceCity.Location = new System.Drawing.Point(900, 107);
-            this.lblLocationServiceCity.Name = "lblLocationServiceCity";
-            this.lblLocationServiceCity.Size = new System.Drawing.Size(103, 13);
-            this.lblLocationServiceCity.TabIndex = 28;
-            this.lblLocationServiceCity.Text = "שרות מיקום - ישוב";
-            // 
-            // txtPingTestAddress
-            // 
-            this.txtPingTestAddress.Location = new System.Drawing.Point(729, 324);
-            this.txtPingTestAddress.Name = "txtPingTestAddress";
-            this.txtPingTestAddress.Size = new System.Drawing.Size(141, 20);
-            this.txtPingTestAddress.TabIndex = 29;
-            // 
-            // nudPingTestIntervalInSeconds
-            // 
-            this.nudPingTestIntervalInSeconds.Location = new System.Drawing.Point(814, 351);
-            this.nudPingTestIntervalInSeconds.Name = "nudPingTestIntervalInSeconds";
-            this.nudPingTestIntervalInSeconds.Size = new System.Drawing.Size(56, 20);
-            this.nudPingTestIntervalInSeconds.TabIndex = 30;
-            // 
-            // nudZoomLevel
-            // 
-            this.nudZoomLevel.Location = new System.Drawing.Point(814, 235);
-            this.nudZoomLevel.Name = "nudZoomLevel";
-            this.nudZoomLevel.Size = new System.Drawing.Size(56, 20);
-            this.nudZoomLevel.TabIndex = 31;
-            // 
-            // txtLocationServiceBingKey
-            // 
-            this.txtLocationServiceBingKey.Location = new System.Drawing.Point(510, 160);
-            this.txtLocationServiceBingKey.Name = "txtLocationServiceBingKey";
-            this.txtLocationServiceBingKey.Size = new System.Drawing.Size(360, 20);
-            this.txtLocationServiceBingKey.TabIndex = 32;
-            // 
-            // txtLocationServiceUrl
-            // 
-            this.txtLocationServiceUrl.Location = new System.Drawing.Point(510, 36);
-            this.txtLocationServiceUrl.Name = "txtLocationServiceUrl";
-            this.txtLocationServiceUrl.Size = new System.Drawing.Size(360, 20);
-            this.txtLocationServiceUrl.TabIndex = 33;
-            // 
-            // txtLocationServiceCountry
-            // 
-            this.txtLocationServiceCountry.Location = new System.Drawing.Point(770, 70);
-            this.txtLocationServiceCountry.Name = "txtLocationServiceCountry";
-            this.txtLocationServiceCountry.Size = new System.Drawing.Size(100, 20);
-            this.txtLocationServiceCountry.TabIndex = 34;
-            // 
-            // txtLocationServiceCity
-            // 
-            this.txtLocationServiceCity.Location = new System.Drawing.Point(691, 104);
-            this.txtLocationServiceCity.Name = "txtLocationServiceCity";
-            this.txtLocationServiceCity.Size = new System.Drawing.Size(179, 20);
-            this.txtLocationServiceCity.TabIndex = 35;
+            this.colCriminalEventId.HeaderText = "Id";
+            this.colCriminalEventId.Name = "colCriminalEventId";
+            this.colCriminalEventId.Visible = false;
             // 
             // frmSettings
             // 
@@ -710,6 +751,10 @@
             this.Text = "הגדרות";
             this.Load += new System.EventHandler(this.frmSettings_Load);
             this.tabSettings.ResumeLayout(false);
+            this.tabGeneral.ResumeLayout(false);
+            this.tabGeneral.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudZoomLevel)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudPingTestIntervalInSeconds)).EndInit();
             this.tabFilesLocations.ResumeLayout(false);
             this.tabFilesLocations.PerformLayout();
             this.tabStreets.ResumeLayout(false);
@@ -722,12 +767,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvLawEnforcementUnits)).EndInit();
             this.tabTrainingUnits.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvTrainingUnits)).EndInit();
+            this.tabCriminalEvents.ResumeLayout(false);
             this.tabCameras.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
-            this.tabGeneral.ResumeLayout(false);
-            this.tabGeneral.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudPingTestIntervalInSeconds)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudZoomLevel)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvCriminalEventTypes)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -800,5 +843,9 @@
         private System.Windows.Forms.TextBox txtLocationServiceCountry;
         private System.Windows.Forms.TextBox txtLocationServiceUrl;
         private System.Windows.Forms.TextBox txtLocationServiceBingKey;
+        private System.Windows.Forms.DataGridView dgvCriminalEventTypes;
+        private System.Windows.Forms.Button btnAddCriminalEventType;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colCriminalEventType;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colCriminalEventId;
     }
 }

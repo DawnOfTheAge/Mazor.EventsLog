@@ -48,6 +48,7 @@
     <Reference Include="GMap.NET.WindowsForms">
       <HintPath>..\..\GIS\GISSampleApplication01\General.GMAP.GUI\3dParty\GMap.NET.WindowsForms.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />

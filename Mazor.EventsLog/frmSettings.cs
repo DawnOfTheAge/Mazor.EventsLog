@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Microsoft.VisualBasic;
 
 namespace Mazor.EventsLog
 {
@@ -24,15 +25,18 @@ namespace Mazor.EventsLog
 
         private ConfigurationInformation configurationInformation;
 
+        private EventsLogDatabase eventsLogDatabase;
+
         #endregion
 
         #region Constructor
 
-        public frmSettings(ConfigurationInformation inConfigurationInformation)
+        public frmSettings(ConfigurationInformation inConfigurationInformation, EventsLogDatabase inEventsLogDatabase)
         {
             InitializeComponent();
 
             configurationInformation = inConfigurationInformation;
+            eventsLogDatabase = inEventsLogDatabase;
         }
 
         #endregion
@@ -41,6 +45,8 @@ namespace Mazor.EventsLog
 
         private void frmSettings_Load(object sender, EventArgs e)
         {
+            string result;
+
             try
             {
                 Location = Cursor.Position;
@@ -50,6 +56,12 @@ namespace Mazor.EventsLog
                 txtLogFilePath.Text = configurationInformation.LogFilePath;
 
                 chkLogToFile.Checked = configurationInformation.LogToFile;
+
+
+                if (!FillCriminalEvents(out result))
+                {
+                    OnAudit($"שגיאת הצגת סוגי אירוע: {result}", AuditSeverity.Warning);
+                }
             }
             catch (Exception ex)
             {
@@ -219,6 +231,21 @@ namespace Mazor.EventsLog
 
             try
             {
+                if (eventsLogDatabase == null)
+                {
+                    result = "אובייקט הנתונים ריק או אינו קיים";
+
+                    return false;
+                }
+
+                List<CriminalEventType1> criminalEventTypes = eventsLogDatabase.CriminalEventTypesList.GetItemsList();
+
+                dgvCriminalEventTypes.Rows.Clear();
+                foreach (CriminalEventType1 criminalEventType in criminalEventTypes)
+                {
+                    dgvCriminalEventTypes.Rows.Add(criminalEventType.Name, criminalEventType.Id);
+                }
+
                 return true;
             }
             catch (Exception e)
@@ -226,6 +253,37 @@ namespace Mazor.EventsLog
                 result = e.Message;
 
                 return false;
+            }
+        }
+        
+        private void btnAddCriminalEventType_Click(object sender, EventArgs e)
+        {
+            string result;
+
+            try
+            {
+                string criminalEventType = Interaction.InputBox("", "סוג אירוע חדש");
+
+                if (string.IsNullOrEmpty(criminalEventType))
+                {
+                    return;
+                }
+
+                if (!eventsLogDatabase.CriminalEventTypesList.Add(criminalEventType, null, out result))
+                {
+                    OnAudit($"שגיאת הוספת סוג אירוע: {result}", AuditSeverity.Warning);
+
+                    return;
+                }
+
+                if (!FillCriminalEvents(out result))
+                {
+                    OnAudit($"שגיאת הצגת סוגי אירוע: {result}", AuditSeverity.Warning);
+                }
+            }
+            catch (Exception ex)
+            {
+                OnAudit($"שגיאת הוספת סוג אירוע: {ex.Message}", AuditSeverity.Error);
             }
         }
 
@@ -294,5 +352,7 @@ namespace Mazor.EventsLog
                 Audit(message, severity);
             }
         }
+
+        
     }
 }
