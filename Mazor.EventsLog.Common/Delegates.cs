@@ -7,4 +7,5 @@ using System.Threading.Tasks;
 namespace Mazor.EventsLog.Common
 {
     public delegate void AuditMessage(string message, AuditSeverity severity);
+    public delegate void CrudMessage(EventsLogTable table, CrudAction action, object data);
 }

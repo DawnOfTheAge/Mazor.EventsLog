@@ -30,7 +30,7 @@ namespace Mazor.EventsLog.Common
 
     #region Training Units
 
-    public class TrainingUnitData
+    public class UnitData
     {
         public ContactDetails Details { get; set; }
         public TimeGap Dates { get; set; }
@@ -39,16 +39,23 @@ namespace Mazor.EventsLog.Common
 
     public class TrainingUnit
     {
-        public TrainingUnit(string name, TrainingUnitData trainingUnitData)
+        public TrainingUnit(string name, UnitData trainingUnitData)
         {
             Name = name;
             Id = Guid.NewGuid();
             Details = trainingUnitData;
         }
 
+        public TrainingUnit(Guid id, string name, UnitData trainingUnitData)
+        {
+            Name = name;
+            Id = id;
+            Details = trainingUnitData;
+        }
+
         public Guid Id { get; set; }
         public string Name { get; set; }
-        public TrainingUnitData Details { get; set; }
+        public UnitData Details { get; set; }
     }
 
     public class TrainingUnits : ICrud<TrainingUnit>
@@ -60,9 +67,10 @@ namespace Mazor.EventsLog.Common
 
         public List<TrainingUnit> ItemsList { get; set; }
 
-        public bool Add(string trainingUnitName, object data, out string result)
+        public bool Add(string trainingUnitName, object data, out Guid newId, out string result)
         {
             result = string.Empty;
+            newId = Guid.Empty;
 
             try
             {
@@ -80,7 +88,19 @@ namespace Mazor.EventsLog.Common
                     return false;
                 }
 
-                ItemsList.Add(new TrainingUnit(trainingUnitName, (TrainingUnitData)data));
+                DataWithGuidContainer container = (DataWithGuidContainer)data;
+                List<object> dataList = (List<object>)(container.Data);
+                UnitData trainingUnitData = (UnitData)(dataList[0]);
+
+                if (container.Id == Guid.Empty)
+                {
+                    ItemsList.Add(new TrainingUnit(trainingUnitName, trainingUnitData));
+                    newId = ItemsList[ItemsList.Count - 1].Id;
+                }
+                else
+                {
+                    ItemsList.Add(new TrainingUnit(container.Id, trainingUnitName, trainingUnitData));
+                }
 
                 return true;
             }
@@ -155,6 +175,13 @@ namespace Mazor.EventsLog.Common
             Details = contactDetails;
         }
 
+        public LawEnforcementUnit(Guid id, string name, ContactDetails contactDetails)
+        {
+            Id = id;
+            Name = name;
+            Details = contactDetails;
+        }
+
         public Guid Id { get; set; }
         public string Name { get; set; }
         public ContactDetails Details { get; set; }
@@ -169,9 +196,10 @@ namespace Mazor.EventsLog.Common
 
         public List<LawEnforcementUnit> ItemsList { get; set; }
 
-        public bool Add(string lawEnforcementUnitName, object data, out string result)
+        public bool Add(string lawEnforcementUnitName, object data, out Guid newId, out string result)
         {
             result = string.Empty;
+            newId = Guid.Empty;
 
             try
             {
@@ -189,7 +217,19 @@ namespace Mazor.EventsLog.Common
                     return false;
                 }
 
-                ItemsList.Add(new LawEnforcementUnit(lawEnforcementUnitName, (ContactDetails)data));
+                DataWithGuidContainer container = (DataWithGuidContainer)data;
+                List<object> dataList = (List<object>)(container.Data);
+                ContactDetails contactDetails = (ContactDetails)(dataList[0]);
+
+                if (container.Id == Guid.Empty)
+                {
+                    ItemsList.Add(new LawEnforcementUnit(lawEnforcementUnitName, contactDetails));
+                    newId = ItemsList[ItemsList.Count - 1].Id;
+                }
+                else
+                {
+                    ItemsList.Add(new LawEnforcementUnit(container.Id, lawEnforcementUnitName, contactDetails));
+                }
 
                 return true;
             }
@@ -264,6 +304,13 @@ namespace Mazor.EventsLog.Common
             Id = Guid.NewGuid();
         }
 
+        public CameraLocation(Guid id, string name, LocationPoint LocationPoint)
+        {
+            Name = name;
+            Point = LocationPoint;
+            Id = id;
+        }
+
         public Guid Id { get; set; }
         public string Name { get; set; }
         public LocationPoint Point { get; set; }
@@ -278,9 +325,10 @@ namespace Mazor.EventsLog.Common
 
         public List<CameraLocation> ItemsList { get; set; }
 
-        public bool Add(string cameraLocationName, object data, out string result)
+        public bool Add(string cameraLocationName, object data, out Guid newId, out string result)
         {
             result = string.Empty;
+            newId = Guid.Empty;
 
             try
             {
@@ -298,7 +346,19 @@ namespace Mazor.EventsLog.Common
                     return false;
                 }
 
-                ItemsList.Add(new CameraLocation(cameraLocationName, (LocationPoint)data));
+                DataWithGuidContainer container = (DataWithGuidContainer)data;
+                List<object> dataList = (List<object>)(container.Data);
+                LocationPoint locationPoint = (LocationPoint)(dataList[0]);
+
+                if (container.Id == Guid.Empty)
+                {
+                    ItemsList.Add(new CameraLocation(cameraLocationName, locationPoint));
+                    newId = ItemsList[ItemsList.Count - 1].Id;
+                }
+                else
+                {
+                    ItemsList.Add(new CameraLocation(container.Id, cameraLocationName, locationPoint));
+                }
 
                 return true;
             }
@@ -395,6 +455,13 @@ namespace Mazor.EventsLog.Common
             Id = Guid.NewGuid();
         }
 
+        public SpecialLocation(Guid id, string name, LocationPoint point)
+        {
+            Name = name;
+            Point = point;
+            Id = id;
+        }
+
         public Guid Id { get; set; }
         public string Name { get; set; }
         public LocationPoint Point { get; set; }
@@ -409,9 +476,10 @@ namespace Mazor.EventsLog.Common
 
         public List<SpecialLocation> ItemsList { get; set; }
 
-        public bool Add(string specialLocationName, object data, out string result)
+        public bool Add(string specialLocationName, object data, out Guid newId, out string result)
         {
             result = string.Empty;
+            newId = Guid.Empty;
 
             try
             {
@@ -429,7 +497,19 @@ namespace Mazor.EventsLog.Common
                     return false;
                 }
 
-                ItemsList.Add(new SpecialLocation(specialLocationName, (LocationPoint)data));
+                DataWithGuidContainer container = (DataWithGuidContainer)data;
+                List<object> dataList = (List<object>)(container.Data);
+                LocationPoint locationPoint = (LocationPoint)(dataList[0]);
+
+                if (container.Id == Guid.Empty)
+                {
+                    ItemsList.Add(new SpecialLocation(specialLocationName, locationPoint));
+                    newId = ItemsList[ItemsList.Count - 1].Id;
+                }
+                else
+                {
+                    ItemsList.Add(new SpecialLocation(container.Id, specialLocationName, locationPoint));
+                }
 
                 return true;
             }
@@ -525,6 +605,12 @@ namespace Mazor.EventsLog.Common
             Id = Guid.NewGuid();
         }
 
+        public ArrivalDirection(Guid id, string name)
+        {
+            Name = name;
+            Id = id;
+        }
+
         public Guid Id { get; set; }
         public string Name { get; set; }
     }
@@ -538,9 +624,10 @@ namespace Mazor.EventsLog.Common
 
         public List<ArrivalDirection> ItemsList { get; set; }
 
-        public bool Add(string arrivalDirectionName, object data, out string result)
+        public bool Add(string arrivalDirectionName, object data, out Guid newId, out string result)
         {
             result = string.Empty;
+            newId = Guid.Empty;
 
             try
             {
@@ -558,7 +645,16 @@ namespace Mazor.EventsLog.Common
                     return false;
                 }
 
-                ItemsList.Add(new ArrivalDirection(arrivalDirectionName));
+                if (data == null)
+                {
+                    ItemsList.Add(new ArrivalDirection(arrivalDirectionName));
+                    newId = ItemsList[ItemsList.Count - 1].Id;
+                }
+                else
+                {
+                    DataWithGuidContainer container = (DataWithGuidContainer)data;
+                    ItemsList.Add(new ArrivalDirection(container.Id, arrivalDirectionName));
+                }
 
                 return true;
             }
@@ -632,6 +728,12 @@ namespace Mazor.EventsLog.Common
             Id = Guid.NewGuid();
         }
 
+        public Street(Guid id, string name)
+        {
+            Name = name;
+            Id = Guid.NewGuid();
+        }
+
         public Guid Id { get; set; }
         public string Name { get; set; }
     }
@@ -645,9 +747,10 @@ namespace Mazor.EventsLog.Common
 
         public List<Street> ItemsList { get; set; }
 
-        public bool Add(string streetName, object data, out string result)
+        public bool Add(string streetName, object data, out Guid newId, out string result)
         {
             result = string.Empty;
+            newId = Guid.Empty;
 
             try
             {
@@ -665,7 +768,16 @@ namespace Mazor.EventsLog.Common
                     return false;
                 }
 
-                ItemsList.Add(new Street(streetName));
+                if (data == null)
+                {
+                    ItemsList.Add(new Street(streetName));
+                    newId = ItemsList[ItemsList.Count - 1].Id;
+                }
+                else
+                {
+                    DataWithGuidContainer container = (DataWithGuidContainer)data;
+                    ItemsList.Add(new Street(container.Id, streetName));
+                }
 
                 return true;
             }
@@ -739,6 +851,12 @@ namespace Mazor.EventsLog.Common
             Id = Guid.NewGuid();
         }
 
+        public CriminalEventType1(Guid id, string name)
+        {
+            Name = name;
+            Id = id;
+        }
+
         public Guid Id { get; set; }
         public string Name { get; set; }
     }
@@ -752,9 +870,10 @@ namespace Mazor.EventsLog.Common
 
         public List<CriminalEventType1> ItemsList { get; set; }
 
-        public bool Add(string criminalEventTypeName, object data, out string result)
+        public bool Add(string criminalEventTypeName, object data, out Guid newId, out string result)
         {
             result = string.Empty;
+            newId = Guid.Empty;
 
             try
             {
@@ -770,9 +889,18 @@ namespace Mazor.EventsLog.Common
                     result = $"שם אירוע קיים: {criminalEventTypeName}";
 
                     return false;
-                }
+                }                
 
-                ItemsList.Add(new CriminalEventType1(criminalEventTypeName));
+                if (data == null)
+                {
+                    ItemsList.Add(new CriminalEventType1(criminalEventTypeName));
+                    newId = ItemsList[ItemsList.Count - 1].Id;
+                }
+                else
+                {
+                    DataWithGuidContainer container = (DataWithGuidContainer)data;
+                    ItemsList.Add(new CriminalEventType1(container.Id, criminalEventTypeName));
+                }
 
                 return true;
             }

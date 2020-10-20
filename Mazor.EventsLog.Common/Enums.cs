@@ -76,4 +76,24 @@ namespace Mazor.EventsLog.Common
         [Description("שגיאה")]
         Error
     }
+
+    public enum CrudAction
+    {
+        Create,
+        Retrieve,
+        Update,
+        Delete
+    }
+
+    public enum EventsLogTable
+    {
+        ConfigurationInformation,
+        CriminalEvents,
+        CriminalEventsTypes,
+        Streets,
+        SpecialLocations,
+        Cameras,
+        LawEnforcementUnits,
+        TrainingUnits
+    }
 }

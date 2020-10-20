@@ -335,4 +335,22 @@ namespace Mazor.EventsLog.Common
         public DateTime From { get; set; }
         public DateTime To { get; set; }
     }
+
+    public class DataWithGuidContainer
+    {
+        public DataWithGuidContainer(List<object> data)
+        {
+            Id = Guid.Empty;
+            Data = data;
+        }
+
+        public DataWithGuidContainer(Guid id, List<object> data)
+        {
+            Id = id;
+            Data = data;
+        }
+
+        public Guid Id { get; set; }
+        public List<object> Data { get; set; }
+    }
 }

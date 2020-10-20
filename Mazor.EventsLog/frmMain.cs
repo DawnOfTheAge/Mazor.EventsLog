@@ -779,7 +779,7 @@ namespace Mazor.EventsLog
             {
                 frmSettings settings = new frmSettings(configurationInformation, eventsLogDatabase);
                 settings.Audit += Search_Audit;
-                settings.Reply += Settings_Reply;
+                settings.Crud += Crud_Reply;
                 settings.Show();
             }
             catch (Exception ex)
@@ -847,31 +847,106 @@ namespace Mazor.EventsLog
 
         #region GUI Event Handlers
 
-        private void Settings_Reply(object sender, EventArgs e)
+        private void Crud_Reply(EventsLogTable table, CrudAction action, object data)
         {
             string result;
+
+            Guid newId;
 
             ConfigurationInformation inConfigurationInformation;
 
             try
             {
-                inConfigurationInformation = (ConfigurationInformation)e;
-
-                if (inConfigurationInformation == null)
+                switch (table)
                 {
-                    Audit($"שגיאת עדכון הגדרות. אובייקט הגדרות ריק", AuditSeverity.Critical);
+                    case EventsLogTable.ConfigurationInformation:
+                        switch (action)
+                        {
+                            case CrudAction.Create:
+                                break;
 
-                    return;
+                            case CrudAction.Retrieve:
+                                break;
+
+                            case CrudAction.Update:
+                                inConfigurationInformation = (ConfigurationInformation)data;
+
+                                if (inConfigurationInformation == null)
+                                {
+                                    Audit($"שגיאת עדכון הגדרות. אובייקט הגדרות ריק", AuditSeverity.Critical);
+
+                                    return;
+                                }
+
+                                if (!SaveToAppConfig(inConfigurationInformation, out result))
+                                {
+                                    Audit($"שגיאת עדכון הגדרות: {result}", AuditSeverity.Critical);
+
+                                    return;
+                                }
+
+                                configurationInformation = inConfigurationInformation;
+                                break;
+
+                            case CrudAction.Delete:
+                                break;
+
+                            default:
+                                break;
+                        }
+                        break;
+
+                    case EventsLogTable.CriminalEvents:
+                        break;
+
+                    case EventsLogTable.CriminalEventsTypes:
+                        switch (action)
+                        {
+                            case CrudAction.Create:
+                                DataWithGuidContainer container = (DataWithGuidContainer)data;
+                                List<object> objectsList = container.Data;
+                                string criminalEventType = (string)(objectsList[0]);
+
+                                if (!eventsLogDatabase.CriminalEventTypesList.Add(criminalEventType, data, out newId, out result))
+                                {
+                                    Audit($"שגיאת הוספת סוג אירוע: {result}", AuditSeverity.Warning);
+                                }
+                                break;
+
+                            case CrudAction.Retrieve:
+                                break;
+
+                            case CrudAction.Update:
+                                break;
+
+                            case CrudAction.Delete:
+                                break;
+
+                            default:
+                                break;
+                        }
+                        break;
+
+                    case EventsLogTable.Streets:
+                        break;
+
+                    case EventsLogTable.SpecialLocations:
+                        break;
+
+                    case EventsLogTable.Cameras:
+                        break;
+
+                    case EventsLogTable.LawEnforcementUnits:
+                        break;
+
+                    case EventsLogTable.TrainingUnits:
+                        break;
+
+                    default:
+                        break;
                 }
 
-                if (!SaveToAppConfig(inConfigurationInformation, out result))
-                {
-                    Audit($"שגיאת עדכון הגדרות: {result}", AuditSeverity.Critical);
-
-                    return;
-                }
-
-                configurationInformation = inConfigurationInformation;
+                
             }
             catch (Exception ex)
             {

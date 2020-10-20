@@ -16,7 +16,7 @@ namespace Mazor.EventsLog
     {
         #region Events
 
-        public event EventHandler Reply;
+        public event CrudMessage Crud;
         public event AuditMessage Audit;
 
         #endregion
@@ -86,20 +86,17 @@ namespace Mazor.EventsLog
                     return;
                 }
 
-                if (Reply != null)
-                {
-                    ConfigurationInformation configurationInformation = new ConfigurationInformation();
+                ConfigurationInformation configurationInformation = new ConfigurationInformation();
 
-                    configurationInformation.JsonFileName = txtJsonFileName.Text;
-                    configurationInformation.JsonFilePath = txtJsonFilePath.Text;
-                    configurationInformation.LogFilePath = txtLogFilePath.Text;
+                configurationInformation.JsonFileName = txtJsonFileName.Text;
+                configurationInformation.JsonFilePath = txtJsonFilePath.Text;
+                configurationInformation.LogFilePath = txtLogFilePath.Text;
 
-                    configurationInformation.LogToFile = chkLogToFile.Checked;
+                configurationInformation.LogToFile = chkLogToFile.Checked;
 
-                    Reply(null, configurationInformation);
+                OnCrud(EventsLogTable.ConfigurationInformation, CrudAction.Update, configurationInformation);
 
-                    Close();
-                }
+                Close();
             }
             catch (Exception ex)
             {
@@ -260,6 +257,8 @@ namespace Mazor.EventsLog
         {
             string result;
 
+            Guid newId;
+
             try
             {
                 string criminalEventType = Interaction.InputBox("", "סוג אירוע חדש");
@@ -269,12 +268,16 @@ namespace Mazor.EventsLog
                     return;
                 }
 
-                if (!eventsLogDatabase.CriminalEventTypesList.Add(criminalEventType, null, out result))
+                if (!eventsLogDatabase.CriminalEventTypesList.Add(criminalEventType, null, out newId, out result))
                 {
                     OnAudit($"שגיאת הוספת סוג אירוע: {result}", AuditSeverity.Warning);
 
                     return;
                 }
+
+                List<object> objectsList = new List<object>() { criminalEventType };
+                DataWithGuidContainer container = new DataWithGuidContainer(newId, objectsList);
+                OnCrud(EventsLogTable.CriminalEventsTypes, CrudAction.Create, container);
 
                 if (!FillCriminalEvents(out result))
                 {
@@ -345,6 +348,14 @@ namespace Mazor.EventsLog
             }
         }
 
+        private void OnCrud(EventsLogTable table, CrudAction action, object data)
+        {
+            if (Crud != null)
+            {
+                Crud(table, action, data);
+            }
+        }
+
         private void OnAudit(string message, AuditSeverity severity)
         {
             if (Audit != null)
@@ -352,7 +363,5 @@ namespace Mazor.EventsLog
                 Audit(message, severity);
             }
         }
-
-        
     }
 }
