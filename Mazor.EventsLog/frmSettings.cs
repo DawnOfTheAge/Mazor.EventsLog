@@ -57,8 +57,7 @@ namespace Mazor.EventsLog
 
                 chkLogToFile.Checked = configurationInformation.LogToFile;
 
-
-                if (!FillCriminalEvents(out result))
+                if (!FillCriminalEventTypes(out result))
                 {
                     OnAudit($"שגיאת הצגת סוגי אירוע: {result}", AuditSeverity.Warning);
                 }
@@ -222,7 +221,7 @@ namespace Mazor.EventsLog
 
         #region Criminal Events
 
-        private bool FillCriminalEvents(out string result)
+        private bool FillCriminalEventTypes(out string result)
         {
             result = string.Empty;
 
@@ -279,7 +278,7 @@ namespace Mazor.EventsLog
                 DataWithGuidContainer container = new DataWithGuidContainer(newId, objectsList);
                 OnCrud(EventsLogTable.CriminalEventsTypes, CrudAction.Create, container);
 
-                if (!FillCriminalEvents(out result))
+                if (!FillCriminalEventTypes(out result))
                 {
                     OnAudit($"שגיאת הצגת סוגי אירוע: {result}", AuditSeverity.Warning);
                 }

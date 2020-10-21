@@ -12,7 +12,7 @@ namespace Mazor.EventsLog.Bll
     {
         #region Data Members
 
-        private List<CriminalEvent> criminalEvents;
+        private EventsLogDatabase eventsLogDatabase;
 
         private string JsonFilePath;
 
@@ -37,11 +37,11 @@ namespace Mazor.EventsLog.Bll
             {
                 if (!File.Exists(JsonFilePath))
                 {
-                    criminalEvents = new List<CriminalEvent>();
+                    eventsLogDatabase = new EventsLogDatabase();
                 }
                 else
                 {
-                    if (!Utils.LoadFromJson(JsonFilePath, out criminalEvents, out result))
+                    if (!Utils.LoadFromJson(JsonFilePath, out eventsLogDatabase, out result))
                     {
                         return false;
                     }
@@ -57,13 +57,13 @@ namespace Mazor.EventsLog.Bll
             }
         }
 
-        public bool SaveCriminalEvents(out string result)
+        public bool SaveDatabase(out string result)
         {
             result = string.Empty;
 
             try
             {
-                if (!Utils.SaveToJson(JsonFilePath, criminalEvents, out result))
+                if (!Utils.SaveToJson(JsonFilePath, eventsLogDatabase, out result))
                 {
                     return false;
                 }
@@ -93,14 +93,9 @@ namespace Mazor.EventsLog.Bll
                     return false;
                 }
 
-                if (criminalEvents == null)
-                {
-                    criminalEvents = new List<CriminalEvent>();
-                }
-
                 criminalEvent.Id = Guid.NewGuid();
 
-                criminalEvents.Add(criminalEvent);
+                eventsLogDatabase.CriminalEventsRecordsList.Add(criminalEvent);
 
                 return true;
             }
@@ -120,7 +115,7 @@ namespace Mazor.EventsLog.Bll
 
             try
             {
-                int index = criminalEvents.FindIndex(x => (x.Id == recordIndex));
+                int index = eventsLogDatabase.CriminalEventsRecordsList.FindIndex(x => (x.Id == recordIndex));
                 if (index == Constants.NONE)
                 {
                     result = string.Format("Record With Index[{0}] Not Found", index);
@@ -128,7 +123,7 @@ namespace Mazor.EventsLog.Bll
                     return false;
                 }
 
-                criminalEvent = criminalEvents[index];
+                criminalEvent = eventsLogDatabase.CriminalEventsRecordsList[index];
 
                 return true;
             }
@@ -150,14 +145,7 @@ namespace Mazor.EventsLog.Bll
             criminalEventsList = null;
 
             try
-            {
-                if (criminalEvents == null)
-                {
-                    result = "No Records Found";
-
-                    return false;
-                }
-
+            {                
                 if (((parameters == null) || (parameters.Count == 0)) && (queryType != QueryType.All))
                 {
                     result = "Parameters List Is Null Or Empty";
@@ -168,7 +156,7 @@ namespace Mazor.EventsLog.Bll
                 switch (queryType)
                 {
                     case QueryType.All:
-                        criminalEventsList = criminalEvents;
+                        criminalEventsList = eventsLogDatabase.CriminalEventsRecordsList;
                         break;
 
                     case QueryType.ByTime:
@@ -181,7 +169,7 @@ namespace Mazor.EventsLog.Bll
                             DateTime dtTime = (DateTime)parameters[0];
 
                             criminalEventsList = new List<CriminalEvent>();
-                            foreach (CriminalEvent criminalEvent in criminalEvents)
+                            foreach (CriminalEvent criminalEvent in eventsLogDatabase.CriminalEventsRecordsList)
                             {
                                 if ((criminalEvent.Time.Hour == dtTime.Hour) && 
                                     (criminalEvent.Time.Minute == dtTime.Minute))
@@ -198,7 +186,7 @@ namespace Mazor.EventsLog.Bll
                             DateTime dtTimeFrom = (DateTime)parameters[0];
                             DateTime dtTimeTo = (DateTime)parameters[1];
 
-                            foreach (CriminalEvent criminalEvent in criminalEvents)
+                            foreach (CriminalEvent criminalEvent in eventsLogDatabase.CriminalEventsRecordsList)
                             {
                                 if ((criminalEvent.Time.TimeOfDay >= dtTimeFrom.TimeOfDay) &&
                                     (criminalEvent.Time.TimeOfDay <= dtTimeTo.TimeOfDay))
@@ -220,7 +208,7 @@ namespace Mazor.EventsLog.Bll
                         {
                             DateTime dtDate = (DateTime)parameters[0];
                             
-                            foreach (CriminalEvent criminalEvent in criminalEvents)
+                            foreach (CriminalEvent criminalEvent in eventsLogDatabase.CriminalEventsRecordsList)
                             {
                                 if ((criminalEvent.Time.Year == dtDate.Year) &&
                                     (criminalEvent.Time.Month == dtDate.Month) &&
@@ -238,7 +226,7 @@ namespace Mazor.EventsLog.Bll
                             DateTime dtDateFrom = (DateTime)parameters[0];
                             DateTime dtDateTo = (DateTime)parameters[1];
 
-                            foreach (CriminalEvent criminalEvent in criminalEvents)
+                            foreach (CriminalEvent criminalEvent in eventsLogDatabase.CriminalEventsRecordsList)
                             {
                                 if ((criminalEvent.Time >= dtDateFrom) &&
                                     (criminalEvent.Time <= dtDateTo))
@@ -262,7 +250,7 @@ namespace Mazor.EventsLog.Bll
                         {
                             List<DayOfWeek> days = (List<DayOfWeek>)parameters[0];
 
-                            foreach (CriminalEvent criminalEvent in criminalEvents)
+                            foreach (CriminalEvent criminalEvent in eventsLogDatabase.CriminalEventsRecordsList)
                             {
                                 foreach (DayOfWeek day in days)
                                 {
@@ -288,7 +276,7 @@ namespace Mazor.EventsLog.Bll
                         {
                             List<string> keyWords = (List<string>)parameters[0];
 
-                            foreach (CriminalEvent criminalEvent in criminalEvents)
+                            foreach (CriminalEvent criminalEvent in eventsLogDatabase.CriminalEventsRecordsList)
                             {
                                 foreach (string keyWord in keyWords)
                                 {
@@ -317,7 +305,7 @@ namespace Mazor.EventsLog.Bll
                         {
                             List<string> keyWords = (List<string>)parameters[0];
 
-                            foreach (CriminalEvent criminalEvent in criminalEvents)
+                            foreach (CriminalEvent criminalEvent in eventsLogDatabase.CriminalEventsRecordsList)
                             {
                                 foreach (string keyWord in keyWords)
                                 {
@@ -343,7 +331,7 @@ namespace Mazor.EventsLog.Bll
                         {
                             List<CriminalEventType> criminalEventTypes = (List<CriminalEventType>)parameters[0];
 
-                            foreach (CriminalEvent criminalEvent in criminalEvents)
+                            foreach (CriminalEvent criminalEvent in eventsLogDatabase.CriminalEventsRecordsList)
                             {
                                 foreach (CriminalEventType criminalEventType in criminalEventTypes)
                                 {
@@ -380,7 +368,7 @@ namespace Mazor.EventsLog.Bll
 
             try
             {
-                int index = criminalEvents.FindIndex(x => (x.Id == criminalEvent.Id));
+                int index = eventsLogDatabase.CriminalEventsRecordsList.FindIndex(x => (x.Id == criminalEvent.Id));
                 if (index == Constants.NONE)
                 {
                     result = string.Format("Record With Index[{0}] Not Found", index);
@@ -388,7 +376,7 @@ namespace Mazor.EventsLog.Bll
                     return false;
                 }
 
-                criminalEvents[index] = criminalEvent;
+                eventsLogDatabase.CriminalEventsRecordsList[index] = criminalEvent;
 
                 return true;
             }
@@ -406,7 +394,7 @@ namespace Mazor.EventsLog.Bll
 
             try
             {
-                int index = criminalEvents.FindIndex(x => (x.Id == recordIndex));
+                int index = eventsLogDatabase.CriminalEventsRecordsList.FindIndex(x => (x.Id == recordIndex));
                 if (index == Constants.NONE)
                 {
                     result = string.Format("Record With Index[{0}] Not Found", index);
@@ -414,7 +402,7 @@ namespace Mazor.EventsLog.Bll
                     return false;
                 }
 
-                criminalEvents.RemoveAt(index);
+                eventsLogDatabase.CriminalEventsRecordsList.RemoveAt(index);
 
                 return true;
             }

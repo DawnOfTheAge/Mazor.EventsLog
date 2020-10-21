@@ -89,16 +89,16 @@
             this.colTrainingUnitEmail = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnAddTrainingUnit = new System.Windows.Forms.Button();
             this.tabCriminalEvents = new System.Windows.Forms.TabPage();
+            this.dgvCriminalEventTypes = new System.Windows.Forms.DataGridView();
+            this.colCriminalEventType = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colCriminalEventId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.btnAddCriminalEventType = new System.Windows.Forms.Button();
             this.tabCameras = new System.Windows.Forms.TabPage();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.colCamera = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colCameraLatitude = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colCameraLongtitude = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnAddCamera = new System.Windows.Forms.Button();
-            this.dgvCriminalEventTypes = new System.Windows.Forms.DataGridView();
-            this.btnAddCriminalEventType = new System.Windows.Forms.Button();
-            this.colCriminalEventType = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colCriminalEventId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabSettings.SuspendLayout();
             this.tabGeneral.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudZoomLevel)).BeginInit();
@@ -115,9 +115,9 @@
             this.tabTrainingUnits.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTrainingUnits)).BeginInit();
             this.tabCriminalEvents.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvCriminalEventTypes)).BeginInit();
             this.tabCameras.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvCriminalEventTypes)).BeginInit();
             this.SuspendLayout();
             // 
             // tabSettings
@@ -658,6 +658,39 @@
             this.tabCriminalEvents.Text = "אירועים";
             this.tabCriminalEvents.UseVisualStyleBackColor = true;
             // 
+            // dgvCriminalEventTypes
+            // 
+            this.dgvCriminalEventTypes.AllowUserToAddRows = false;
+            this.dgvCriminalEventTypes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvCriminalEventTypes.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.colCriminalEventType,
+            this.colCriminalEventId});
+            this.dgvCriminalEventTypes.Location = new System.Drawing.Point(786, 8);
+            this.dgvCriminalEventTypes.Name = "dgvCriminalEventTypes";
+            this.dgvCriminalEventTypes.Size = new System.Drawing.Size(240, 420);
+            this.dgvCriminalEventTypes.TabIndex = 4;
+            // 
+            // colCriminalEventType
+            // 
+            this.colCriminalEventType.HeaderText = "סוג אירוע";
+            this.colCriminalEventType.Name = "colCriminalEventType";
+            // 
+            // colCriminalEventId
+            // 
+            this.colCriminalEventId.HeaderText = "Id";
+            this.colCriminalEventId.Name = "colCriminalEventId";
+            this.colCriminalEventId.Visible = false;
+            // 
+            // btnAddCriminalEventType
+            // 
+            this.btnAddCriminalEventType.Location = new System.Drawing.Point(674, 8);
+            this.btnAddCriminalEventType.Name = "btnAddCriminalEventType";
+            this.btnAddCriminalEventType.Size = new System.Drawing.Size(106, 36);
+            this.btnAddCriminalEventType.TabIndex = 3;
+            this.btnAddCriminalEventType.Text = "הוספת סוג אירוע";
+            this.btnAddCriminalEventType.UseVisualStyleBackColor = true;
+            this.btnAddCriminalEventType.Click += new System.EventHandler(this.btnAddCriminalEventType_Click);
+            // 
             // tabCameras
             // 
             this.tabCameras.Controls.Add(this.dataGridView1);
@@ -706,39 +739,6 @@
             this.btnAddCamera.Text = "הוספת מצלמה";
             this.btnAddCamera.UseVisualStyleBackColor = true;
             // 
-            // dgvCriminalEventTypes
-            // 
-            this.dgvCriminalEventTypes.AllowUserToAddRows = false;
-            this.dgvCriminalEventTypes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvCriminalEventTypes.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.colCriminalEventType,
-            this.colCriminalEventId});
-            this.dgvCriminalEventTypes.Location = new System.Drawing.Point(786, 8);
-            this.dgvCriminalEventTypes.Name = "dgvCriminalEventTypes";
-            this.dgvCriminalEventTypes.Size = new System.Drawing.Size(240, 420);
-            this.dgvCriminalEventTypes.TabIndex = 4;
-            // 
-            // btnAddCriminalEventType
-            // 
-            this.btnAddCriminalEventType.Location = new System.Drawing.Point(674, 8);
-            this.btnAddCriminalEventType.Name = "btnAddCriminalEventType";
-            this.btnAddCriminalEventType.Size = new System.Drawing.Size(106, 36);
-            this.btnAddCriminalEventType.TabIndex = 3;
-            this.btnAddCriminalEventType.Text = "הוספת סוג אירוע";
-            this.btnAddCriminalEventType.UseVisualStyleBackColor = true;
-            this.btnAddCriminalEventType.Click += new System.EventHandler(this.btnAddCriminalEventType_Click);
-            // 
-            // colCriminalEventType
-            // 
-            this.colCriminalEventType.HeaderText = "סוג אירוע";
-            this.colCriminalEventType.Name = "colCriminalEventType";
-            // 
-            // colCriminalEventId
-            // 
-            this.colCriminalEventId.HeaderText = "Id";
-            this.colCriminalEventId.Name = "colCriminalEventId";
-            this.colCriminalEventId.Visible = false;
-            // 
             // frmSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -768,9 +768,9 @@
             this.tabTrainingUnits.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvTrainingUnits)).EndInit();
             this.tabCriminalEvents.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvCriminalEventTypes)).EndInit();
             this.tabCameras.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvCriminalEventTypes)).EndInit();
             this.ResumeLayout(false);
 
         }

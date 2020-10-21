@@ -772,6 +772,20 @@ namespace Mazor.EventsLog
         #endregion
 
         #region General
+        
+        private void btnBudget_Click(object sender, EventArgs e)
+        {
+            string result;
+
+            try
+            {
+                
+            }
+            catch (Exception ex)
+            {
+                Audit($"שגיאת תצוגת תקציב: {ex.Message}", AuditSeverity.Error);
+            }
+        }
 
         private void btnSettings_Click(object sender, EventArgs e)
         {
@@ -829,7 +843,7 @@ namespace Mazor.EventsLog
                 }
                 else
                 {
-                    if (!crud.SaveCriminalEvents(out result))
+                    if (!crud.SaveDatabase(out result))
                     {
                         MessageBox.Show(result, "תקלת שמירת נתונים", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
@@ -1515,7 +1529,7 @@ namespace Mazor.EventsLog
                     return;
                 }
 
-                if (!crud.SaveCriminalEvents(out result))
+                if (!crud.SaveDatabase(out result))
                 {
                     MessageBox.Show(result, "תקלת שמירת נתונים", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
@@ -1626,6 +1640,6 @@ namespace Mazor.EventsLog
             }
         }
 
-        #endregion
+        #endregion        
     }
 }

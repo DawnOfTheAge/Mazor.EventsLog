@@ -30,9 +30,9 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.ribbonMain = new System.Windows.Forms.Ribbon();
             this.rtCrudRecord = new System.Windows.Forms.RibbonTab();
             this.rpEvents = new System.Windows.Forms.RibbonPanel();
@@ -77,6 +77,7 @@
             this.colSeverity = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colMessage = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tmrTestConnection = new System.Windows.Forms.Timer(this.components);
+            this.btnBudget = new System.Windows.Forms.RibbonButton();
             this.pnlMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
             this.splitContainer.Panel1.SuspendLayout();
@@ -236,6 +237,7 @@
             this.rpGeneral.Items.Add(this.btnExit);
             this.rpGeneral.Items.Add(this.btnVersion);
             this.rpGeneral.Items.Add(this.btnSettings);
+            this.rpGeneral.Items.Add(this.btnBudget);
             this.rpGeneral.Name = "rpGeneral";
             this.rpGeneral.Text = "כללי";
             // 
@@ -266,7 +268,6 @@
             this.btnSettings.Name = "btnSettings";
             this.btnSettings.SmallImage = ((System.Drawing.Image)(resources.GetObject("btnSettings.SmallImage")));
             this.btnSettings.Text = "הגדרות";
-            this.btnSettings.DoubleClick += new System.EventHandler(this.btnSettings_Click);
             this.btnSettings.Click += new System.EventHandler(this.btnSettings_Click);
             // 
             // ribbonButton4
@@ -343,22 +344,22 @@
             // 
             // colDescription
             // 
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.colDescription.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.colDescription.DefaultCellStyle = dataGridViewCellStyle1;
             this.colDescription.HeaderText = "תיאור כללי";
             this.colDescription.Name = "colDescription";
             // 
             // colPresentInEvent
             // 
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.colPresentInEvent.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.colPresentInEvent.DefaultCellStyle = dataGridViewCellStyle2;
             this.colPresentInEvent.HeaderText = "נוכחים באירוע";
             this.colPresentInEvent.Name = "colPresentInEvent";
             // 
             // colArrivalDirection
             // 
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.colArrivalDirection.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.colArrivalDirection.DefaultCellStyle = dataGridViewCellStyle3;
             this.colArrivalDirection.HeaderText = "כיוון הגעה";
             this.colArrivalDirection.Name = "colArrivalDirection";
             // 
@@ -461,6 +462,15 @@
             // 
             this.tmrTestConnection.Tick += new System.EventHandler(this.tmrTestConnection_Tick);
             // 
+            // btnBudget
+            // 
+            this.btnBudget.Image = global::Mazor.EventsLog.Properties.Resources.Budget;
+            this.btnBudget.LargeImage = global::Mazor.EventsLog.Properties.Resources.Budget;
+            this.btnBudget.Name = "btnBudget";
+            this.btnBudget.SmallImage = ((System.Drawing.Image)(resources.GetObject("btnBudget.SmallImage")));
+            this.btnBudget.Text = "תקציב";
+            this.btnBudget.Click += new System.EventHandler(this.btnBudget_Click);
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -532,6 +542,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colHouseNumber;
         private System.Windows.Forms.DataGridViewTextBoxColumn colTypeEnum;
         private System.Windows.Forms.Timer tmrTestConnection;
+        private System.Windows.Forms.RibbonButton btnBudget;
     }
 }
 

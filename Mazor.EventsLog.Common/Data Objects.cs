@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,6 +12,7 @@ namespace Mazor.EventsLog.Common
     {
         public EventsLogDatabase()
         {
+            Settings = new EventsLogSettings();
             CriminalEventsRecordsList = new List<CriminalEvent>();
             StreetsList = new Streets();
             CriminalEventTypesList = new CriminalEventTypes();
@@ -19,6 +22,7 @@ namespace Mazor.EventsLog.Common
             TrainingUnitsList = new TrainingUnits();
         }
 
+        public EventsLogSettings Settings { get; set; }
         public List<CriminalEvent> CriminalEventsRecordsList { get; set; }
         public Streets StreetsList { get; set; }
         public CriminalEventTypes CriminalEventTypesList { get; set; }
@@ -27,6 +31,31 @@ namespace Mazor.EventsLog.Common
         public CamerasLocations CameraLocationsList { get; set; }
         public TrainingUnits TrainingUnitsList { get; set; }
     }
+
+    #region Settings
+
+    public class EventsLogSettings
+    {
+        public EventsLogSettings()
+        {
+            JsonFileName = "EventsLog";
+            JsonFilePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            LogFilePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            LogToFile = false;
+        }
+
+        public string JsonFileName { get; set; }
+        public string JsonFilePath { get; set; }
+        public string LogFilePath { get; set; }
+        public bool LogToFile { get; set; }
+
+        public LocationServiceInformation LocationService { get; set; }
+        public MapInitialInformation Map { get; set; }
+        public string PingTestAddress { get; set; }
+        public int PingTestIntervalInSeconds { get; set; }
+    }
+
+    #endregion
 
     #region Training Units
 
