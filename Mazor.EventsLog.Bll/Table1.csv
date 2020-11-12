@@ -1,0 +1,3 @@
+field1,varchar(20)
+field2,integer
+field3,uniqueidentifier

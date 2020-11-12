@@ -181,6 +181,8 @@ namespace General.Common.Database.SqlServer
                                           ipPort +
                                           ";Persist Security Info=True;User Id=" + databaseParameters.DatabaseUsername +
                                           ";Password=" + databaseParameters.DatabasePassword + ";Min Pool Size=1";
+
+                //connectionString = "Password = Mazor2020; Persist Security Info = True; User ID = sa;Initial Catalog=EventsLogDB;Data Source=IL-300982\\SQLEXPRESS01";
                 _connection = new SqlConnection(connectionString);
 
                 report = "Connection String[" + connectionString + "]";
@@ -231,9 +233,7 @@ namespace General.Common.Database.SqlServer
 
                         if (string.IsNullOrEmpty(databaseParameters.DatabaseTableFieldsCsvPath))
                         {
-                            report += Environment.NewLine + "Path to Database Table Fields Csv File Does Not Exist";
-
-                            break;
+                            databaseParameters.DatabaseTableFieldsCsvPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
                         }
 
                         Table table; 

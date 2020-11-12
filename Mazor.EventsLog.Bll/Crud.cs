@@ -1,8 +1,11 @@
-﻿using Mazor.EventsLog.Common;
+﻿using General.Common.Database.Common;
+using General.Common.Database.SqlServer;
+using Mazor.EventsLog.Common;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -15,6 +18,14 @@ namespace Mazor.EventsLog.Bll
         private EventsLogDatabase eventsLogDatabase;
 
         private string JsonFilePath;
+
+        private IRepositoryDatabase _repositoryDatabase;
+
+        private OpenDatabaseParameters _openDatabaseParameters;
+
+        private AppConfigManager _appConfigManager;
+
+        private string _parseDelimiter;
 
         #endregion
 
@@ -31,17 +42,51 @@ namespace Mazor.EventsLog.Bll
 
         public bool Start(out string result)
         {
+            string method = "[" + MethodBase.GetCurrentMethod().Name + "]: ";
+            string message;
+
+            bool databaseOpened = false;
+
             result = string.Empty;
 
             try
             {
+                if (LoadConfiguration())
+                {
+                    if (!OpenDatabase())
+                    {
+                        message = "Failed Openning Database";
+
+                        Audit(method + message);
+                    }
+                    else
+                    {
+                        databaseOpened = true;
+                    }
+                }
+                else
+                {
+                    message = "Configuration Loading Failed. Database Not Opened. Not Connected To WCF Service";
+
+                    Audit(method + message);
+
+                }
+
+                if (!databaseOpened)
+                {
+                    message = "Database Not Opened";
+
+                    Audit(method + message);
+                }
+
+
                 if (!File.Exists(JsonFilePath))
                 {
                     eventsLogDatabase = new EventsLogDatabase();
                 }
                 else
                 {
-                    if (!Utils.LoadFromJson(JsonFilePath, out eventsLogDatabase, out result))
+                    if (!Mazor.EventsLog.Common.Utils.LoadFromJson(JsonFilePath, out eventsLogDatabase, out result))
                     {
                         return false;
                     }
@@ -63,7 +108,7 @@ namespace Mazor.EventsLog.Bll
 
             try
             {
-                if (!Utils.SaveToJson(JsonFilePath, eventsLogDatabase, out result))
+                if (!Mazor.EventsLog.Common.Utils.SaveToJson(JsonFilePath, eventsLogDatabase, out result))
                 {
                     return false;
                 }
@@ -73,6 +118,140 @@ namespace Mazor.EventsLog.Bll
             catch (Exception e)
             {
                 result = e.Message;
+
+                return false;
+            }
+        }
+
+        //  Purpose:        Load configuration
+        //  Input:          none
+        //  Output:         true / false
+        private bool LoadConfiguration()
+        {
+            string method = "[" + MethodBase.GetCurrentMethod().Name + "]: ";
+            string bllPath = Assembly.GetExecutingAssembly().Location;
+            string databaseType;
+            string message = "";
+
+            try
+            {
+                _appConfigManager = new AppConfigManager(bllPath);
+                if (!_appConfigManager.ConfigurationFileExists)
+                {
+                    message = "Configuration file '.xml' does not exist";
+
+                    Audit(method + message);
+
+                    return false;
+                }
+
+                _appConfigManager.AppConfigManagerMessage += appConfigManager_AppConfigManagerMessage;
+
+                _parseDelimiter = _appConfigManager.ReadSetting("ParseDelimiter");
+                if (string.IsNullOrEmpty(_parseDelimiter))
+                {
+                    message = "Parse delimiter type is missing";
+
+                    Audit(method + message);
+
+                    return false;
+                }
+
+                databaseType = _appConfigManager.ReadSetting("DatabaseType");
+                if (string.IsNullOrEmpty(databaseType))
+                {
+                    message = "Database type is missing";
+
+                    Audit(method + message);
+
+                    return false;
+                }
+
+                Audit(method + "Delimiter: '" + _parseDelimiter + "'" + Environment.NewLine +
+                      "Database Type: " + databaseType);
+
+                _openDatabaseParameters = new OpenDatabaseParameters();
+                if (!SetDatabase())
+                {
+                    message = "Database type '" + databaseType + "' has no DAL";
+
+                    Audit(method + message);
+
+                    return false;
+                }
+
+                message = "Configuration loaded";
+
+                return true;
+            }
+            catch (Exception e)
+            {
+                message = e.Message + ". Line " + General.Common.Database.Common.Utils.GetLineNumber(e);
+
+                Audit(method + message);
+
+                return false;
+            }
+            finally
+            {
+            }
+        }
+
+        //  Purpose:        Set database parameters
+        //  Input:          databaseType
+        //  Output:         true / false
+        private bool SetDatabase()
+        {
+            string method = "[" + MethodBase.GetCurrentMethod().Name + "]: ";
+
+            try
+            {
+                _openDatabaseParameters.DatabaseName = _appConfigManager.ReadSetting("DatabaseName");
+                _openDatabaseParameters.DatabaseTables = _appConfigManager.ReadSetting("DatabaseTables");
+                _openDatabaseParameters.DatabaseTableFieldsCsvPath = _appConfigManager.ReadSetting("DatabaseTableFieldsCsvPath");
+                _openDatabaseParameters.DatabaseIpAddress = _appConfigManager.ReadSetting("DatabaseIpAddress");
+                _openDatabaseParameters.DatabaseIpPort = _appConfigManager.ReadSetting("DatabaseIpPort");
+                _openDatabaseParameters.DatabaseUsername = _appConfigManager.ReadSetting("DatabaseUsername");
+                _openDatabaseParameters.DatabasePassword = _appConfigManager.ReadSetting("DatabasePassword");
+
+                _repositoryDatabase = new SqlServerDal();
+
+                _repositoryDatabase.RepositoryDatabaseMessage += _repositoryDatabase_RepositoryDatabaseMessage;
+
+                return true;
+            }
+            catch (Exception e)
+            {
+                Audit(method + e.Message + ". Line " + General.Common.Database.Common.Utils.GetLineNumber(e));
+
+                return false;
+            }
+        }
+
+        //  Purpose:        open database
+        //  Input:          none
+        //  Output:         true / false
+        public bool OpenDatabase()
+        {
+            string method = "[" + MethodBase.GetCurrentMethod().Name + "]: ";
+            string result;
+
+            try
+            {
+                if (!_repositoryDatabase.OpenDb(_openDatabaseParameters, out result))
+                {
+                    Audit(method + result);
+
+                    return false;
+                }
+
+                Audit(method + result);
+
+                return true;
+            }
+            catch (Exception e)
+            {
+                Audit(method + e.Message + ". Line " + General.Common.Database.Common.Utils.GetLineNumber(e));
 
                 return false;
             }
@@ -116,7 +295,7 @@ namespace Mazor.EventsLog.Bll
             try
             {
                 int index = eventsLogDatabase.CriminalEventsRecordsList.FindIndex(x => (x.Id == recordIndex));
-                if (index == Constants.NONE)
+                if (index == Mazor.EventsLog.Common.Constants.NONE)
                 {
                     result = string.Format("Record With Index[{0}] Not Found", index);
                     
@@ -369,7 +548,7 @@ namespace Mazor.EventsLog.Bll
             try
             {
                 int index = eventsLogDatabase.CriminalEventsRecordsList.FindIndex(x => (x.Id == criminalEvent.Id));
-                if (index == Constants.NONE)
+                if (index == Mazor.EventsLog.Common.Constants.NONE)
                 {
                     result = string.Format("Record With Index[{0}] Not Found", index);
                     
@@ -395,7 +574,7 @@ namespace Mazor.EventsLog.Bll
             try
             {
                 int index = eventsLogDatabase.CriminalEventsRecordsList.FindIndex(x => (x.Id == recordIndex));
-                if (index == Constants.NONE)
+                if (index == Mazor.EventsLog.Common.Constants.NONE)
                 {
                     result = string.Format("Record With Index[{0}] Not Found", index);
 
@@ -413,5 +592,28 @@ namespace Mazor.EventsLog.Bll
                 return false;
             }
         }
+
+        #region Audit
+
+        private void Audit(string message)
+        {
+            Console.WriteLine(message);
+        }
+
+        private void _repositoryDatabase_RepositoryDatabaseMessage(object sender, EventArgs e)
+        {
+            string message = (string)sender;
+
+            Audit(message);
+        }
+
+        private void appConfigManager_AppConfigManagerMessage(object sender, EventArgs e)
+        {
+            string message = (string)sender;
+
+            Audit(message);
+        }
+
+        #endregion
     }
 }
