@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace General.Common.Database.Common
+namespace General.Database.Common
 {
     public static class Constants
     {

@@ -15,9 +15,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mazor.EventsLog.GIS.Bing", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mazor.EventsLog.DatabaseV1toV2Converter", "Mazor.EventsLog.DatabaseV1toV2Converter\Mazor.EventsLog.DatabaseV1toV2Converter.csproj", "{57F341C4-9B3A-42D3-B8DA-801E6AD7D1EA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "General.Common.Database.Common", "General.Common.Database.Common\General.Common.Database.Common.csproj", "{267A6042-88FC-473E-AB19-BF628C24288D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "General.Database.Common", "General.Database.Common\General.Database.Common.csproj", "{267A6042-88FC-473E-AB19-BF628C24288D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "General.Common.Database.SqlServer", "General.Common.Database.SqlServer\General.Common.Database.SqlServer.csproj", "{F323178D-40D7-4BDE-B79B-09B0E0B7E87A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "General.Database.SqlServer", "General.Database.SqlServer\General.Database.SqlServer.csproj", "{F323178D-40D7-4BDE-B79B-09B0E0B7E87A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

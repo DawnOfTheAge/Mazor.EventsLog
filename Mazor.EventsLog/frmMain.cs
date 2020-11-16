@@ -163,6 +163,8 @@ namespace Mazor.EventsLog
                 crud = new Crud(jsonFile);
                 if (!crud.Start(out result))
                 {
+                    Audit(result, AuditSeverity.Warning);
+
                     return false;
                 }
 

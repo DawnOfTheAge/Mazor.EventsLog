@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using General.Common.Database.Common;
+using General.Database.Common;
 
-namespace General.Common.Database.Common
+namespace General.Database.Common
 {
     public interface IRepositoryDatabase
     {

@@ -1,4 +1,4 @@
-﻿namespace General.Common.Database.Common
+﻿namespace General.Database.Common
 {
     public class OpenDatabaseParameters
     {

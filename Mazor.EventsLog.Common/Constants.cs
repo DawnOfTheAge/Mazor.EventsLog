@@ -17,5 +17,7 @@ namespace Mazor.EventsLog.Common
 
         public const string CITY = "Mazor";
         public const string INITIAL_MAC_ADDRESS_VALUE = "00A0C0D0C000";
+
+        public const string DATABASE_PARAMETERS_FILE = "Mazor.EventsLog.Database.OpenParameters";
     }
 }

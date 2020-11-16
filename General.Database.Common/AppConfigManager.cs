@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 
-namespace General.Common.Database.Common
+namespace General.Database.Common
 {
     public class AppConfigManager 
     {

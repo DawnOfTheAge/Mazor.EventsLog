@@ -45,13 +45,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\General.Common.Database.Common\General.Common.Database.Common.csproj">
+    <ProjectReference Include="..\General.Database.Common\General.Database.Common.csproj">
       <Project>{267a6042-88fc-473e-ab19-bf628c24288d}</Project>
-      <Name>General.Common.Database.Common</Name>
+      <Name>General.Database.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\General.Common.Database.SqlServer\General.Common.Database.SqlServer.csproj">
+    <ProjectReference Include="..\General.Database.SqlServer\General.Database.SqlServer.csproj">
       <Project>{f323178d-40d7-4bde-b79b-09b0e0b7e87a}</Project>
-      <Name>General.Common.Database.SqlServer</Name>
+      <Name>General.Database.SqlServer</Name>
     </ProjectReference>
     <ProjectReference Include="..\Mazor.EventsLog.Common\Mazor.EventsLog.Common.csproj">
       <Project>{fec89b3a-941f-45ed-80ab-5e0ba12feba4}</Project>
@@ -59,11 +59,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Mazor.EventsLog.Bll.xml">
+    <None Include="Mazor.EventsLog.Database.OpenParameters.JSON">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
+    </None>
     <None Include="Table1.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

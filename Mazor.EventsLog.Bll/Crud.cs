@@ -1,5 +1,5 @@
-﻿using General.Common.Database.Common;
-using General.Common.Database.SqlServer;
+﻿using General.Database.Common;
+using General.Database.SqlServer;
 using Mazor.EventsLog.Common;
 using System;
 using System.Collections.Generic;
@@ -21,12 +21,6 @@ namespace Mazor.EventsLog.Bll
 
         private IRepositoryDatabase _repositoryDatabase;
 
-        private OpenDatabaseParameters _openDatabaseParameters;
-
-        private AppConfigManager _appConfigManager;
-
-        private string _parseDelimiter;
-
         #endregion
 
         #region Constructor
@@ -42,54 +36,29 @@ namespace Mazor.EventsLog.Bll
 
         public bool Start(out string result)
         {
-            string method = "[" + MethodBase.GetCurrentMethod().Name + "]: ";
-            string message;
-
-            bool databaseOpened = false;
+            OpenDatabaseParameters openDatabaseParameters;
 
             result = string.Empty;
 
             try
             {
-                if (LoadConfiguration())
+                if (LoadConfiguration(out openDatabaseParameters, out result))
                 {
-                    if (!OpenDatabase())
+                    _repositoryDatabase = new SqlServerDal();
+                    _repositoryDatabase.RepositoryDatabaseMessage += _repositoryDatabase_RepositoryDatabaseMessage;
+
+                    if (!OpenDatabase(openDatabaseParameters, out result))
                     {
-                        message = "Failed Openning Database";
+                        result = $"Failed Openning Database: {result}";
 
-                        Audit(method + message);
-                    }
-                    else
-                    {
-                        databaseOpened = true;
-                    }
-                }
-                else
-                {
-                    message = "Configuration Loading Failed. Database Not Opened. Not Connected To WCF Service";
-
-                    Audit(method + message);
-
-                }
-
-                if (!databaseOpened)
-                {
-                    message = "Database Not Opened";
-
-                    Audit(method + message);
-                }
-
-
-                if (!File.Exists(JsonFilePath))
-                {
-                    eventsLogDatabase = new EventsLogDatabase();
-                }
-                else
-                {
-                    if (!Mazor.EventsLog.Common.Utils.LoadFromJson(JsonFilePath, out eventsLogDatabase, out result))
-                    {
                         return false;
                     }
+                }
+                else
+                {
+                    result = $"Configuration Loading Failed. Database Not Opened. {result}";
+
+                    return false;
                 }
 
                 return true;
@@ -126,103 +95,49 @@ namespace Mazor.EventsLog.Bll
         //  Purpose:        Load configuration
         //  Input:          none
         //  Output:         true / false
-        private bool LoadConfiguration()
+        private bool LoadConfiguration(out OpenDatabaseParameters openDatabaseParameters, out string result)
         {
             string method = "[" + MethodBase.GetCurrentMethod().Name + "]: ";
-            string bllPath = Assembly.GetExecutingAssembly().Location;
-            string databaseType;
-            string message = "";
+            string message;
+            string filename;
+
+            openDatabaseParameters = null;
+            result = string.Empty;
 
             try
             {
-                _appConfigManager = new AppConfigManager(bllPath);
-                if (!_appConfigManager.ConfigurationFileExists)
-                {
-                    message = "Configuration file '.xml' does not exist";
+                filename = $"{General.Database.Common.Utils.VerifyPath(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location))}{Mazor.EventsLog.Common.Constants.DATABASE_PARAMETERS_FILE}.JSON";
 
-                    Audit(method + message);
+                if (File.Exists(filename))
+                {
+                    if (!Mazor.EventsLog.Common.Utils.LoadFromJson<OpenDatabaseParameters>(filename, out openDatabaseParameters, out result))
+                    {
+                        result = $"Load JSON File Error: {result}";
+
+                        return false;
+                    }                    
+                }
+                else
+                {
+                    result = $"'{filename}' Does Not Exist";
 
                     return false;
                 }
 
-                _appConfigManager.AppConfigManagerMessage += appConfigManager_AppConfigManagerMessage;
-
-                _parseDelimiter = _appConfigManager.ReadSetting("ParseDelimiter");
-                if (string.IsNullOrEmpty(_parseDelimiter))
+                if (openDatabaseParameters == null)
                 {
-                    message = "Parse delimiter type is missing";
-
-                    Audit(method + message);
+                    result = "Open Database Parameters Object Is Null";
 
                     return false;
                 }
-
-                databaseType = _appConfigManager.ReadSetting("DatabaseType");
-                if (string.IsNullOrEmpty(databaseType))
-                {
-                    message = "Database type is missing";
-
-                    Audit(method + message);
-
-                    return false;
-                }
-
-                Audit(method + "Delimiter: '" + _parseDelimiter + "'" + Environment.NewLine +
-                      "Database Type: " + databaseType);
-
-                _openDatabaseParameters = new OpenDatabaseParameters();
-                if (!SetDatabase())
-                {
-                    message = "Database type '" + databaseType + "' has no DAL";
-
-                    Audit(method + message);
-
-                    return false;
-                }
-
-                message = "Configuration loaded";
 
                 return true;
             }
             catch (Exception e)
             {
-                message = e.Message + ". Line " + General.Common.Database.Common.Utils.GetLineNumber(e);
+                message = e.Message + ". Line " + General.Database.Common.Utils.GetLineNumber(e);
 
                 Audit(method + message);
-
-                return false;
-            }
-            finally
-            {
-            }
-        }
-
-        //  Purpose:        Set database parameters
-        //  Input:          databaseType
-        //  Output:         true / false
-        private bool SetDatabase()
-        {
-            string method = "[" + MethodBase.GetCurrentMethod().Name + "]: ";
-
-            try
-            {
-                _openDatabaseParameters.DatabaseName = _appConfigManager.ReadSetting("DatabaseName");
-                _openDatabaseParameters.DatabaseTables = _appConfigManager.ReadSetting("DatabaseTables");
-                _openDatabaseParameters.DatabaseTableFieldsCsvPath = _appConfigManager.ReadSetting("DatabaseTableFieldsCsvPath");
-                _openDatabaseParameters.DatabaseIpAddress = _appConfigManager.ReadSetting("DatabaseIpAddress");
-                _openDatabaseParameters.DatabaseIpPort = _appConfigManager.ReadSetting("DatabaseIpPort");
-                _openDatabaseParameters.DatabaseUsername = _appConfigManager.ReadSetting("DatabaseUsername");
-                _openDatabaseParameters.DatabasePassword = _appConfigManager.ReadSetting("DatabasePassword");
-
-                _repositoryDatabase = new SqlServerDal();
-
-                _repositoryDatabase.RepositoryDatabaseMessage += _repositoryDatabase_RepositoryDatabaseMessage;
-
-                return true;
-            }
-            catch (Exception e)
-            {
-                Audit(method + e.Message + ". Line " + General.Common.Database.Common.Utils.GetLineNumber(e));
 
                 return false;
             }
@@ -231,27 +146,29 @@ namespace Mazor.EventsLog.Bll
         //  Purpose:        open database
         //  Input:          none
         //  Output:         true / false
-        public bool OpenDatabase()
+        private bool OpenDatabase(OpenDatabaseParameters openDatabaseParameters, out string result)
         {
-            string method = "[" + MethodBase.GetCurrentMethod().Name + "]: ";
-            string result;
+            result = string.Empty;
 
             try
             {
-                if (!_repositoryDatabase.OpenDb(_openDatabaseParameters, out result))
+                if (_repositoryDatabase == null)
                 {
-                    Audit(method + result);
+                    result = "Database Repository Object Is Null";
 
                     return false;
                 }
 
-                Audit(method + result);
+                if (!_repositoryDatabase.OpenDb(openDatabaseParameters, out result))
+                {
+                    return false;
+                }
 
                 return true;
             }
             catch (Exception e)
             {
-                Audit(method + e.Message + ". Line " + General.Common.Database.Common.Utils.GetLineNumber(e));
+                result = e.Message;
 
                 return false;
             }
@@ -325,12 +242,19 @@ namespace Mazor.EventsLog.Bll
 
             try
             {                
-                if (((parameters == null) || (parameters.Count == 0)) && (queryType != QueryType.All))
+                if ((parameters == null) || (parameters.Count == 0))
                 {
                     result = "Parameters List Is Null Or Empty";
 
                     return false;
                 }
+
+                //if (((parameters == null) || (parameters.Count == 0)) && (queryType != QueryType.All))
+                //{
+                //    result = "Parameters List Is Null Or Empty";
+
+                //    return false;
+                //}
 
                 switch (queryType)
                 {

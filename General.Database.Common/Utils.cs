@@ -1,9 +1,10 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 
-namespace General.Common.Database.Common
+namespace General.Database.Common
 {
     public static class Utils
     {
@@ -253,6 +254,16 @@ namespace General.Common.Database.Common
 
         #endregion
 
+        public static string VerifyPath(string path)
+        {
+            if (path[path.Length - 1] != '\\')
+            {
+                path += "\\";
+            }
+
+            return path;
+        }
+
         public static int GetLineNumber(Exception ex)
         {
             try
@@ -396,5 +407,65 @@ namespace General.Common.Database.Common
                 return false;
             }
         }
+
+        #region JSON Read & Write
+
+        public static bool Object2Json(string filename, object oObject, out string result)
+        {
+            result = string.Empty;
+
+            try
+            {
+                string json = JsonConvert.SerializeObject(oObject);
+
+                File.WriteAllText(filename, json);
+
+                return true;
+            }
+            catch (Exception e)
+            {
+                result = e.Message;
+
+                return false;
+            }
+        }
+
+        public static bool Json2Object<T>(string filename, out T oObject, out string result)
+        {
+            result = string.Empty;
+
+            oObject = default;
+
+            try
+            {
+                if (!File.Exists(filename))
+                {
+                    result = $"'{filename}' Does Not Exist";
+
+                    return false;
+                }
+
+                string json = File.ReadAllText(filename);
+
+                if (string.IsNullOrEmpty(json))
+                {
+                    result = $"'{filename}' Does Not Contain JSON Contence";
+
+                    return false;
+                }
+
+                oObject = JsonConvert.DeserializeObject<T>(json);
+
+                return true;
+            }
+            catch (Exception e)
+            {
+                result = e.Message;
+
+                return false;
+            }
+        }
+
+        #endregion
     }
 }
