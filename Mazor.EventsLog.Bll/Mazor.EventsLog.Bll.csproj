@@ -71,14 +71,24 @@
     <None Include="ContactDetails.CSV">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="CriminalEvents.CSV" />
-    <None Include="CriminalEventTypes.CSV" />
+    <None Include="CriminalEvents.CSV">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="CriminalEventTypes.CSV">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Damages.CSV">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="DamagesInCriminalEvent.CSV" />
-    <None Include="LawEnforcementUnitInCriminalEvent.CSV" />
-    <None Include="LawEnforcementUnits.CSV" />
+    <None Include="DamagesInCriminalEvent.CSV">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="LawEnforcementUnitInCriminalEvent.CSV">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="LawEnforcementUnits.CSV">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Locations.CSV">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -91,7 +101,9 @@
     <None Include="Streets.CSV">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="TrainingUnits.CSV" />
+    <None Include="TrainingUnits.CSV">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
