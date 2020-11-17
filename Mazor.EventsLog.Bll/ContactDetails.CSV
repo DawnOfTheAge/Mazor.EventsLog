@@ -1,0 +1,4 @@
+Id,int identity(1,1) NOT NULL
+ContactPerson,varchar(60) NOT NULL
+Phone,varchar(60) NULL
+Email,varchar(60) NULL

@@ -1,0 +1,3 @@
+Id,int identity(1,1) NOT NULL
+Name,varchar(60) NOT NULL
+LocationId,integer NOT NULL

@@ -1,0 +1,7 @@
+Id,int identity(1,1) NOT NULL
+Name,varchar(60) NOT NULL
+ContactDetailsId,integer NOT NULL
+FromDate,datetime2 NOT NULL
+ToDate,datetime2 NOT NULL
+FromTime,datetime2 NOT NULL
+ToTime,datetime2 NOT NULL

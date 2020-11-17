@@ -1,0 +1,2 @@
+CriminalEventIId,integer NOT NULL
+DamageId,integer NOT NULL

@@ -1,0 +1,3 @@
+Id,int identity(1,1) NOT NULL
+Latitude,float NOT NULL
+Longtitude,float NOT NULL

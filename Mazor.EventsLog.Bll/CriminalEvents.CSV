@@ -1,0 +1,9 @@
+Id,int identity(1,1) NOT NULL
+CriminalEventTypeId,integer NOT NULL
+HouseNumber,integer NULL
+Family,varchar(60) NULL
+Time,datetime2 NOT NULL
+StreetId,integer NULL
+ArrivalDirectionId,integer NULL
+Description,varchar(60) NULL
+LocationId,integer NULL

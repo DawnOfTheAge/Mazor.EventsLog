@@ -1,0 +1,2 @@
+CriminalEventId,integer NOT NULL
+LawEnforcementUnitId,integer NOT NULL

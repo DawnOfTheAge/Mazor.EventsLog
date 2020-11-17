@@ -1,0 +1,5 @@
+Id,int identity(1,1) NOT NULL
+Date,datetime2 NOT NULL
+Reason,varchar(60) NOT NULL
+Description,varchar(60) NULL
+Sum,float NOT NULL
