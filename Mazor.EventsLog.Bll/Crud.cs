@@ -131,6 +131,11 @@ namespace Mazor.EventsLog.Bll
                     return false;
                 }
 
+                if (openDatabaseParameters.DatabaseTableFieldsCsvPath == ".")
+                {
+                    openDatabaseParameters.DatabaseTableFieldsCsvPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+                }
+
                 return true;
             }
             catch (Exception e)

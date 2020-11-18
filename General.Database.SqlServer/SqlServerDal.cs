@@ -1567,10 +1567,21 @@ namespace General.Database.SqlServer
                 int count = 1;
                 foreach (List<string> currentField in fieldList)
                 {
-                    if ((currentField != null) && (currentField.Count == NUMBER_OF_FIELD_PROPERTIES))
+                    if ((currentField != null) && ((currentField.Count == NUMBER_OF_FIELD_PROPERTIES) || (currentField.Count == NUMBER_OF_FIELD_PROPERTIES + 1)))
                     {
-                        string fieldName = currentField[0];
-                        string fieldType = currentField[1];
+                        string fieldName;
+                        string fieldType;
+
+                        fieldName = currentField[0];
+
+                        if ((currentField.Count == (NUMBER_OF_FIELD_PROPERTIES + 1)) && (currentField[1].ToLower().Contains("identity")))
+                        {
+                            fieldType = $"{currentField[1]},{currentField[2]}";
+                        }
+                        else
+                        {
+                            fieldType = currentField[1];
+                        }
 
                         if (!table.AddField(fieldName, fieldType, out result))
                         {
