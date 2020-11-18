@@ -564,7 +564,7 @@ namespace Mazor.EventsLog
 
                 CriminalEventType type = (CriminalEventType)(dgvEventsLog.Rows[rowIndex].Cells[14].Value);
 
-                Guid id = (Guid)(dgvEventsLog.Rows[rowIndex].Cells[10].Value);
+                int id = (int)(dgvEventsLog.Rows[rowIndex].Cells[10].Value);
                 int houseNumber = (int)(dgvEventsLog.Rows[rowIndex].Cells[13].Value);
 
                 DateTime time = (DateTime)(dgvEventsLog.Rows[rowIndex].Cells[11].Value);
@@ -609,8 +609,8 @@ namespace Mazor.EventsLog
                     return;
                 }
 
-                Guid id = (Guid)(dgvEventsLog.Rows[rowIndex].Cells[10].Value);
-                if (id != Guid.Empty)
+                int id = (int)(dgvEventsLog.Rows[rowIndex].Cells[10].Value);
+                if (id != Constants.NONE)
                 {
                     DialogResult dialogResult = MessageBox.Show("?לבטל", "ביטול אירוע", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                     if (dialogResult != DialogResult.Yes)
@@ -777,11 +777,10 @@ namespace Mazor.EventsLog
         
         private void btnBudget_Click(object sender, EventArgs e)
         {
-            string result;
-
             try
             {
-                
+                frmBudget budget = new frmBudget();
+                budget.Show();
             }
             catch (Exception ex)
             {
@@ -867,7 +866,7 @@ namespace Mazor.EventsLog
         {
             string result;
 
-            Guid newId;
+            int newId;
 
             ConfigurationInformation inConfigurationInformation;
 
@@ -919,7 +918,7 @@ namespace Mazor.EventsLog
                         switch (action)
                         {
                             case CrudAction.Create:
-                                DataWithGuidContainer container = (DataWithGuidContainer)data;
+                                DataWithIdContainer container = (DataWithIdContainer)data;
                                 List<object> objectsList = container.Data;
                                 string criminalEventType = (string)(objectsList[0]);
 
@@ -987,7 +986,7 @@ namespace Mazor.EventsLog
                     return;
                 }
 
-                if (criminalEvent.Id == Guid.Empty)
+                if (criminalEvent.Id == Constants.NONE)
                 {
                     if (!crud.Create(criminalEvent, out result))
                     {

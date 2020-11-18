@@ -74,6 +74,12 @@
     <Compile Include="frmAddUpdateCriminalRecord.Designer.cs">
       <DependentUpon>frmAddUpdateCriminalRecord.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmBudget.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmBudget.Designer.cs">
+      <DependentUpon>frmBudget.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmCombinedSearch.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -126,6 +132,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="frmAddUpdateCriminalRecord.resx">
       <DependentUpon>frmAddUpdateCriminalRecord.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmBudget.resx">
+      <DependentUpon>frmBudget.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmCombinedSearch.resx">
       <DependentUpon>frmCombinedSearch.cs</DependentUpon>

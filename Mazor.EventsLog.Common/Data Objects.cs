@@ -68,23 +68,34 @@ namespace Mazor.EventsLog.Common
 
     public class TrainingUnit
     {
-        public TrainingUnit(string name, UnitData trainingUnitData)
+        public TrainingUnit(string name, int contactDetailsId, DateTime fromDate, DateTime toDate, DateTime fromTime, DateTime toTime)
         {
             Name = name;
-            Id = Guid.NewGuid();
-            Details = trainingUnitData;
+            ContactDetailsId = contactDetailsId;
+            FromDate = fromDate;
+            ToDate = toDate;
+            FromTime = fromTime;
+            ToTime = toTime;
         }
 
-        public TrainingUnit(Guid id, string name, UnitData trainingUnitData)
+        public TrainingUnit(int id, string name, int contactDetailsId, DateTime fromDate, DateTime toDate, DateTime fromTime, DateTime toTime)
         {
             Name = name;
             Id = id;
-            Details = trainingUnitData;
+            ContactDetailsId = contactDetailsId;
+            FromDate = fromDate;
+            ToDate = toDate;
+            FromTime = fromTime;
+            ToTime = toTime;
         }
 
-        public Guid Id { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
-        public UnitData Details { get; set; }
+        public int ContactDetailsId { get; set; }
+        public DateTime FromDate { get; set; }
+        public DateTime ToDate { get; set; }
+        public DateTime FromTime { get; set; }
+        public DateTime ToTime { get; set; }
     }
 
     public class TrainingUnits : ICrud<TrainingUnit>
@@ -96,10 +107,10 @@ namespace Mazor.EventsLog.Common
 
         public List<TrainingUnit> ItemsList { get; set; }
 
-        public bool Add(string trainingUnitName, object data, out Guid newId, out string result)
+        public bool Add(string trainingUnitName, object data, out int newId, out string result)
         {
             result = string.Empty;
-            newId = Guid.Empty;
+            newId = Constants.NONE;
 
             try
             {
@@ -117,11 +128,11 @@ namespace Mazor.EventsLog.Common
                     return false;
                 }
 
-                DataWithGuidContainer container = (DataWithGuidContainer)data;
+                DataWithIdContainer container = (DataWithIdContainer)data;
                 List<object> dataList = (List<object>)(container.Data);
                 UnitData trainingUnitData = (UnitData)(dataList[0]);
 
-                if (container.Id == Guid.Empty)
+                if (container.Id == Constants.NONE)
                 {
                     ItemsList.Add(new TrainingUnit(trainingUnitName, trainingUnitData));
                     newId = ItemsList[ItemsList.Count - 1].Id;
@@ -160,7 +171,7 @@ namespace Mazor.EventsLog.Common
             }
         }
 
-        public bool Delete(Guid trainingUnitId, out string result)
+        public bool Delete(int trainingUnitId, out string result)
         {
             result = string.Empty;
 
@@ -197,23 +208,22 @@ namespace Mazor.EventsLog.Common
 
     public class LawEnforcementUnit
     {
-        public LawEnforcementUnit(string name, ContactDetails contactDetails)
+        public LawEnforcementUnit(string name, int contactDetailsId)
         {
             Name = name;
-            Id = Guid.NewGuid();
-            Details = contactDetails;
+            ContactDetailsId = contactDetailsId;
         }
 
-        public LawEnforcementUnit(Guid id, string name, ContactDetails contactDetails)
+        public LawEnforcementUnit(int id, string name, int contactDetailsId)
         {
             Id = id;
             Name = name;
-            Details = contactDetails;
+            ContactDetailsId = contactDetailsId;
         }
 
-        public Guid Id { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
-        public ContactDetails Details { get; set; }
+        public int ContactDetailsId { get; set; }
     }
 
     public class LawEnforcementUnits : ICrud<LawEnforcementUnit>
@@ -225,10 +235,10 @@ namespace Mazor.EventsLog.Common
 
         public List<LawEnforcementUnit> ItemsList { get; set; }
 
-        public bool Add(string lawEnforcementUnitName, object data, out Guid newId, out string result)
+        public bool Add(string lawEnforcementUnitName, object data, out int newId, out string result)
         {
             result = string.Empty;
-            newId = Guid.Empty;
+            newId = Constants.NONE;
 
             try
             {
@@ -246,11 +256,11 @@ namespace Mazor.EventsLog.Common
                     return false;
                 }
 
-                DataWithGuidContainer container = (DataWithGuidContainer)data;
+                DataWithIdContainer container = (DataWithIdContainer)data;
                 List<object> dataList = (List<object>)(container.Data);
                 ContactDetails contactDetails = (ContactDetails)(dataList[0]);
 
-                if (container.Id == Guid.Empty)
+                if (container.Id == Constants.NONE)
                 {
                     ItemsList.Add(new LawEnforcementUnit(lawEnforcementUnitName, contactDetails));
                     newId = ItemsList[ItemsList.Count - 1].Id;
@@ -289,7 +299,7 @@ namespace Mazor.EventsLog.Common
             }
         }
 
-        public bool Delete(Guid lawEnforcementUnitId, out string result)
+        public bool Delete(int lawEnforcementUnitId, out string result)
         {
             result = string.Empty;
 
@@ -326,23 +336,22 @@ namespace Mazor.EventsLog.Common
 
     public class CameraLocation
     {
-        public CameraLocation(string name, LocationPoint LocationPoint)
+        public CameraLocation(string name, int locationId)
         {
             Name = name;
-            Point = LocationPoint;
-            Id = Guid.NewGuid();
+            LocationId = locationId;
         }
 
-        public CameraLocation(Guid id, string name, LocationPoint LocationPoint)
+        public CameraLocation(int id, string name, int locationId)
         {
             Name = name;
-            Point = LocationPoint;
+            LocationId = locationId;
             Id = id;
         }
 
-        public Guid Id { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
-        public LocationPoint Point { get; set; }
+        public int LocationId { get; set; }
     }
 
     public class CamerasLocations : ICrud<CameraLocation>
@@ -354,10 +363,10 @@ namespace Mazor.EventsLog.Common
 
         public List<CameraLocation> ItemsList { get; set; }
 
-        public bool Add(string cameraLocationName, object data, out Guid newId, out string result)
+        public bool Add(string cameraLocationName, object data, out int newId, out string result)
         {
             result = string.Empty;
-            newId = Guid.Empty;
+            newId = Constants.NONE;
 
             try
             {
@@ -375,11 +384,11 @@ namespace Mazor.EventsLog.Common
                     return false;
                 }
 
-                DataWithGuidContainer container = (DataWithGuidContainer)data;
+                DataWithIdContainer container = (DataWithIdContainer)data;
                 List<object> dataList = (List<object>)(container.Data);
                 LocationPoint locationPoint = (LocationPoint)(dataList[0]);
 
-                if (container.Id == Guid.Empty)
+                if (container.Id == Constants.NONE)
                 {
                     ItemsList.Add(new CameraLocation(cameraLocationName, locationPoint));
                     newId = ItemsList[ItemsList.Count - 1].Id;
@@ -418,7 +427,7 @@ namespace Mazor.EventsLog.Common
             }
         }
 
-        public bool Delete(Guid cameraLocationId, out string result)
+        public bool Delete(int cameraLocationId, out string result)
         {
             result = string.Empty;
 
@@ -443,7 +452,7 @@ namespace Mazor.EventsLog.Common
             }
         }
 
-        public bool GetLocation(Guid cameraLocationId, out LocationPoint point, out string result)
+        public bool GetLocation(int cameraLocationId, out LocationPoint point, out string result)
         {
             result = string.Empty;
 
@@ -477,23 +486,22 @@ namespace Mazor.EventsLog.Common
 
     public class SpecialLocation
     {
-        public SpecialLocation(string name, LocationPoint point)
+        public SpecialLocation(string name, int locationId)
         {
             Name = name;
-            Point = point;
-            Id = Guid.NewGuid();
+            LocationId = locationId;
         }
 
-        public SpecialLocation(Guid id, string name, LocationPoint point)
+        public SpecialLocation(int id, string name, int locationId )
         {
             Name = name;
-            Point = point;
+            LocationId = locationId;
             Id = id;
         }
 
-        public Guid Id { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
-        public LocationPoint Point { get; set; }
+        public int LocationId { get; set; }
     }
 
     public class SpecialLocations : ICrud<SpecialLocation>
@@ -505,10 +513,10 @@ namespace Mazor.EventsLog.Common
 
         public List<SpecialLocation> ItemsList { get; set; }
 
-        public bool Add(string specialLocationName, object data, out Guid newId, out string result)
+        public bool Add(string specialLocationName, object data, out int newId, out string result)
         {
             result = string.Empty;
-            newId = Guid.Empty;
+            newId = Constants.NONE;
 
             try
             {
@@ -526,11 +534,11 @@ namespace Mazor.EventsLog.Common
                     return false;
                 }
 
-                DataWithGuidContainer container = (DataWithGuidContainer)data;
+                DataWithIdContainer container = (DataWithIdContainer)data;
                 List<object> dataList = (List<object>)(container.Data);
                 LocationPoint locationPoint = (LocationPoint)(dataList[0]);
 
-                if (container.Id == Guid.Empty)
+                if (container.Id == Constants.NONE)
                 {
                     ItemsList.Add(new SpecialLocation(specialLocationName, locationPoint));
                     newId = ItemsList[ItemsList.Count - 1].Id;
@@ -569,7 +577,7 @@ namespace Mazor.EventsLog.Common
             }
         }
 
-        public bool Delete(Guid specialLocationId, out string result)
+        public bool Delete(int specialLocationId, out string result)
         {
             result = string.Empty;
 
@@ -594,7 +602,7 @@ namespace Mazor.EventsLog.Common
             }
         }
 
-        public bool GetLocation(Guid specialLocationId, out LocationPoint point, out string result)
+        public bool GetLocation(int specialLocationId, out LocationPoint point, out string result)
         {
             result = string.Empty;
 
@@ -631,16 +639,15 @@ namespace Mazor.EventsLog.Common
         public ArrivalDirection(string name)
         {
             Name = name;
-            Id = Guid.NewGuid();
         }
 
-        public ArrivalDirection(Guid id, string name)
+        public ArrivalDirection(int id, string name)
         {
             Name = name;
             Id = id;
         }
 
-        public Guid Id { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
     }
 
@@ -653,10 +660,10 @@ namespace Mazor.EventsLog.Common
 
         public List<ArrivalDirection> ItemsList { get; set; }
 
-        public bool Add(string arrivalDirectionName, object data, out Guid newId, out string result)
+        public bool Add(string arrivalDirectionName, object data, out int newId, out string result)
         {
             result = string.Empty;
-            newId = Guid.Empty;
+            newId = Constants.NONE;
 
             try
             {
@@ -681,7 +688,7 @@ namespace Mazor.EventsLog.Common
                 }
                 else
                 {
-                    DataWithGuidContainer container = (DataWithGuidContainer)data;
+                    DataWithIdContainer container = (DataWithIdContainer)data;
                     ItemsList.Add(new ArrivalDirection(container.Id, arrivalDirectionName));
                 }
 
@@ -714,7 +721,7 @@ namespace Mazor.EventsLog.Common
             }
         }
 
-        public bool Delete(Guid arrivalDirectionId, out string result)
+        public bool Delete(int arrivalDirectionId, out string result)
         {
             result = string.Empty;
 
@@ -754,16 +761,14 @@ namespace Mazor.EventsLog.Common
         public Street(string name)
         {
             Name = name;
-            Id = Guid.NewGuid();
         }
 
-        public Street(Guid id, string name)
+        public Street(int id, string name)
         {
             Name = name;
-            Id = Guid.NewGuid();
         }
 
-        public Guid Id { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
     }
 
@@ -776,10 +781,10 @@ namespace Mazor.EventsLog.Common
 
         public List<Street> ItemsList { get; set; }
 
-        public bool Add(string streetName, object data, out Guid newId, out string result)
+        public bool Add(string streetName, object data, out int newId, out string result)
         {
             result = string.Empty;
-            newId = Guid.Empty;
+            newId = Constants.NONE;
 
             try
             {
@@ -804,7 +809,7 @@ namespace Mazor.EventsLog.Common
                 }
                 else
                 {
-                    DataWithGuidContainer container = (DataWithGuidContainer)data;
+                    DataWithIdContainer container = (DataWithIdContainer)data;
                     ItemsList.Add(new Street(container.Id, streetName));
                 }
 
@@ -837,7 +842,7 @@ namespace Mazor.EventsLog.Common
             }
         }
 
-        public bool Delete(Guid streetId, out string result)
+        public bool Delete(int streetId, out string result)
         {
             result = string.Empty;
 
@@ -870,6 +875,127 @@ namespace Mazor.EventsLog.Common
 
     #endregion
 
+    #region Damages
+
+    public class Damage
+    {
+        public Damage(string name)
+        {
+            Name = name;
+        }
+
+        public Damage(int id, string name)
+        {
+            Name = name;
+        }
+
+        public int Id { get; set; }
+        public string Name { get; set; }
+    }
+
+    public class Damages : ICrud<Damage>
+    {
+        public Damages()
+        {
+            ItemsList = new List<Damage>();
+        }
+
+        public List<Damage> ItemsList { get; set; }
+
+        public bool Add(string damageName, object data, out int newId, out string result)
+        {
+            result = string.Empty;
+            newId = Constants.NONE;
+
+            try
+            {
+                if (ItemsList == null)
+                {
+                    result = "רשימת נזקים לא קיימת";
+
+                    return false;
+                }
+
+                if (Exists(damageName))
+                {
+                    result = $"שם נזק קיים: {damageName}";
+
+                    return false;
+                }
+
+                if (data == null)
+                {
+                    ItemsList.Add(new Damage(damageName));
+                    newId = ItemsList[ItemsList.Count - 1].Id;
+                }
+                else
+                {
+                    DataWithIdContainer container = (DataWithIdContainer)data;
+                    ItemsList.Add(new Damage(container.Id, damageName));
+                }
+
+                return true;
+            }
+            catch (Exception e)
+            {
+                result = e.Message;
+
+                return false;
+            }
+        }
+
+        public bool Exists(string damageName)
+        {
+            try
+            {
+                if ((ItemsList == null) || (ItemsList.Count == 0))
+                {
+                    return false;
+                }
+
+                Damage damageExists = ItemsList.Where(damage => damage.Name.Trim() == damageName.Trim()).First();
+
+                return (damageExists != null);
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        public bool Delete(int damageId, out string result)
+        {
+            result = string.Empty;
+
+            try
+            {
+                if ((ItemsList == null) || (ItemsList.Count == 0))
+                {
+                    result = "רשימת הנזקים ריקה";
+
+                    return false;
+                }
+
+                ItemsList.Remove(ItemsList.Where(damage => damage.Id == damageId).First());
+
+                return true;
+            }
+            catch (Exception e)
+            {
+                result = e.Message;
+
+                return false;
+            }
+        }
+
+        public List<Damage> GetItemsList()
+        {
+            return ItemsList;
+        }
+    }
+
+    #endregion
+
     #region Criminal Event Types
 
     public class CriminalEventType1
@@ -877,16 +1003,15 @@ namespace Mazor.EventsLog.Common
         public CriminalEventType1(string name)
         {
             Name = name;
-            Id = Guid.NewGuid();
         }
 
-        public CriminalEventType1(Guid id, string name)
+        public CriminalEventType1(int id, string name)
         {
             Name = name;
             Id = id;
         }
 
-        public Guid Id { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
     }
 
@@ -899,10 +1024,10 @@ namespace Mazor.EventsLog.Common
 
         public List<CriminalEventType1> ItemsList { get; set; }
 
-        public bool Add(string criminalEventTypeName, object data, out Guid newId, out string result)
+        public bool Add(string criminalEventTypeName, object data, out int newId, out string result)
         {
             result = string.Empty;
-            newId = Guid.Empty;
+            newId = Constants.NONE;
 
             try
             {
@@ -927,7 +1052,7 @@ namespace Mazor.EventsLog.Common
                 }
                 else
                 {
-                    DataWithGuidContainer container = (DataWithGuidContainer)data;
+                    DataWithIdContainer container = (DataWithIdContainer)data;
                     ItemsList.Add(new CriminalEventType1(container.Id, criminalEventTypeName));
                 }
 
@@ -960,7 +1085,7 @@ namespace Mazor.EventsLog.Common
             }
         }
 
-        public bool Delete(Guid streetId, out string result)
+        public bool Delete(int streetId, out string result)
         {
             result = string.Empty;
 
@@ -1002,7 +1127,7 @@ namespace Mazor.EventsLog.Common
         }
 
         public CriminalEvent(CriminalEventType type,
-                             Guid id,
+                             int id,
                              int houseNumber,
                              DateTime time,
                              string street,
@@ -1026,7 +1151,7 @@ namespace Mazor.EventsLog.Common
 
         public CriminalEventType Type { get; set; }
 
-        public Guid Id { get; set; }
+        public int Id { get; set; }
         public int HouseNumber { get; set; }
 
         public DateTime Time { get; set; }

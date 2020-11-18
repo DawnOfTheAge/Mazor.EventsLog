@@ -104,9 +104,9 @@ namespace Mazor.EventsLog
                 {
                     CriminalEvent newCriminalEvent = new CriminalEvent();
 
-                    newCriminalEvent.Id = (criminalEvent == null) ? Guid.Empty : criminalEvent.Id;
+                    newCriminalEvent.Id = (criminalEvent == null) ? Constants.NONE : criminalEvent.Id;
 
-                    if (newCriminalEvent.Id != Guid.Empty)
+                    if (newCriminalEvent.Id != Constants.NONE)
                     {
                         DialogResult dialogResult = MessageBox.Show("?לעדכן", "עדכון אירוע", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                         if (dialogResult != DialogResult.Yes)

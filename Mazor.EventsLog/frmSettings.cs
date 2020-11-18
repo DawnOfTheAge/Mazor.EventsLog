@@ -256,7 +256,7 @@ namespace Mazor.EventsLog
         {
             string result;
 
-            Guid newId;
+            int newId;
 
             try
             {
@@ -275,7 +275,7 @@ namespace Mazor.EventsLog
                 }
 
                 List<object> objectsList = new List<object>() { criminalEventType };
-                DataWithGuidContainer container = new DataWithGuidContainer(newId, objectsList);
+                DataWithIdContainer container = new DataWithIdContainer(newId, objectsList);
                 OnCrud(EventsLogTable.CriminalEventsTypes, CrudAction.Create, container);
 
                 if (!FillCriminalEventTypes(out result))

@@ -10,9 +10,9 @@ namespace Mazor.EventsLog.Common
     {
         List<T> ItemsList { get; set; }
 
-        bool Add(string name, object data, out Guid newId, out string result);
+        bool Add(string name, object data, out int newId, out string result);
         bool Exists(string name);
-        bool Delete(Guid id, out string result);
+        bool Delete(int id, out string result);
 
         List<T> GetItemsList();
     }
